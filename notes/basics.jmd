@@ -1,10 +1,13 @@
 ---
-title : Julia basics
-author : Michiel Stock
+title : Getting started with Julia
+author : |
+  Michiel Stock
+  Bram De Jaegher
+  Daan?
 date: December 2019
 ---
 
-## Basic computing
+# Basic computing
 
 ```julia
 1 + 2
@@ -43,7 +46,7 @@ mystery = "life, the universe and everything"
 println("The answer to $mystery is $(3*2*7)")
 ```
 
-## Boolean operators
+# Boolean operators
 
 ```julia
 # Boolean operators
@@ -62,7 +65,7 @@ println("The answer to $mystery is $(3*2*7)")
 2 < 3 < 2  # => false
 ```
 
-## Control flow
+# Control flow
 
 ```julia
 if 4 > 3
@@ -78,7 +81,7 @@ end
 y = condition ? valueiftrue : valueiffalse
 ```
 
-## Looping
+# Looping
 
 ```julia
 characters = ["Harry", "Ron", "Hermione"]
@@ -98,7 +101,7 @@ for (char, pet) in zip(characters, pets)
 end
 ```
 
-```julia
+```julia; echo=false
 n = 1675767616;
 
 while n > 1
@@ -111,7 +114,7 @@ while n > 1
 end
 ```
 
-## Functions
+# Functions
 
 ```julia
 function square(x)
@@ -130,9 +133,10 @@ square("ni")
 s(x) = x * x
 ```
 
-```julia
+```julia; eval=false
 s([1, 2, 3, 4, 5])
-
+```
+```
 s.([1, 2, 3, 4, 5])
 ```
 
@@ -162,7 +166,7 @@ sort!(my_unsorted_list)
 my_unsorted_list
 ```
 
-## Plotting
+# Plotting
 
 ```julia
 using Plots
@@ -175,10 +179,14 @@ scatter!([1:10], randn(10), label="scatter")
 xlabel!("x")
 ylabel!("f(x)")
 title!("My pretty Julia plot")
+```
 
+
+```julia
 plot(0:0.1:10, x -> sin(x) / x, xlabel="x", ylabel="sin(x)/x", legend=:none)
-
+```
+```julia
 contour(-5:0.1:5, -10:0.1:10, (x, y) -> 3x^2-4y^2 + x*y/6)
 ```
 
-## Exercise
+# Exercise

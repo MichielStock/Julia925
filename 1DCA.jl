@@ -50,13 +50,13 @@ end
 
 using Plots
 
-x₀ = zeros(Bool, 20010)
+x₀ = zeros(Bool, 20001)
 
 x₀[10001] = true
 
-#x₀ = rand(Bool, 1000)
+#x₀ = rand(Bool, 2001)
 
-rule = CARule(30)
+rule = CARule(110)
 
-X = simulate(x₀, rule, nsteps=10000)
+X = simulate(x₀, rule, nsteps=1000)
 heatmap(1X)

@@ -1,0 +1,25 @@
+---
+title : Project: automatic error propagation
+author : |
+  Michiel Stock
+  Bram De Jaegher
+  Daan?
+date: December 2019
+---
+
+# What is error propagation?
+
+uring my first year of college, I really liked the physics lectures because everything was exact. In my first year of physics, I really disliked the physics labs, because everything was messy. First-year physics labs are generally disliked partially because of the uninspiring topics (measuring resistance in a wire! determining a heat transfer coefficient! measuring chirality of sugar!) and partly because this was the only lab in which 'exact' measurements had to be performed. These labs introduced the complex and unexplained rules for measurement error propagation. Without any prior statistics or probability courses, it was lost on me where these strange rules originated from, as sharp contrast to nearly everything else in physics.
+
+A year later, after plowing through a basic probability course, error propagation is less mysterious. Almost all these rules to account for the error can be derived from a simple principle:
+
+> Given two **independent** random variables $$X$$ and $$Y$$, the variance of a linear combination $$\text{Var}[aX+bY]=a^2\text{Var}[X] + b^2\text{Var}[Y]$$.
+
+Measurement errors are usually given by a standard deviation, the square root of the variance. Given this principle, error propagation is merely bookkeeping of the standard error on the measurement for various computations.
+
+Instead of processing the measurements and the standard error separately, suppose we could just make a new type of number which contains both the observed value and its uncertainty. And suppose we could just compute something with these numbers, plugging them into our formulas where the error is automatically accounted for using the standard error propagation rules. In Julia, it is dead simple to construct such new numbers and just overload existing functions such that they compute in the correct way.
+
+# Goal of this project
+
+We will implement a binary operator `±`, which can be used to add the standard error to a measurement.
+The result is a new type `Measurement` containing both the value and the standard error. Standard functions will be overloaded to process this structure correctly.
