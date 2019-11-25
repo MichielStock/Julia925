@@ -42,7 +42,7 @@ function simulate(x₀, rule::CARule; nsteps::Integer=100)
     xnew = similar(x₀)
     for t in 1:nsteps
         update!(x, xnew, rule)
-        X[t+1,:] = x
+        X[t+1,:] = xnew
         x = xnew
     end
     return X

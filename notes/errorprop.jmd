@@ -9,7 +9,7 @@ date: December 2019
 
 # What is error propagation?
 
-uring my first year of college, I really liked the physics lectures because everything was exact. In my first year of physics, I really disliked the physics labs, because everything was messy. First-year physics labs are generally disliked partially because of the uninspiring topics (measuring resistance in a wire! determining a heat transfer coefficient! measuring chirality of sugar!) and partly because this was the only lab in which 'exact' measurements had to be performed. These labs introduced the complex and unexplained rules for measurement error propagation. Without any prior statistics or probability courses, it was lost on me where these strange rules originated from, as sharp contrast to nearly everything else in physics.
+During my first year of college, I really liked the physics lectures because everything was exact. In my first year of physics, I really disliked the physics labs, because everything was messy. First-year physics labs are generally disliked partially because of the uninspiring topics (measuring resistance in a wire! determining a heat transfer coefficient! measuring chirality of sugar!) and partly because this was the only lab in which 'exact' measurements had to be performed. These labs introduced the complex and unexplained rules for measurement error propagation. Without any prior statistics or probability courses, it was lost on me where these strange rules originated from, as sharp contrast to nearly everything else in physics.
 
 A year later, after plowing through a basic probability course, error propagation is less mysterious. Almost all these rules to account for the error can be derived from a simple principle:
 
