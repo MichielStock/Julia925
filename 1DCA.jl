@@ -34,7 +34,7 @@ function update!(x, xnew, rule::DetCARule)
     return xnew
 end
 
-function simulate(x₀, rule::CARule; nsteps::Int=100)
+function simulate(x₀, rule::CARule; nsteps::Integer=100)
     n = length(x₀)
     X = Array{Bool,2}(undef, nsteps+1, n)
     X[1,:] .= x₀
