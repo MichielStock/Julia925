@@ -16,14 +16,15 @@ A = []            # empty array
 X = [1, 3, -5, 7] # array of integers
 ```
 
-It is highly controversial but Julia uses 1-based indexing. 
+Let's start by eating the frog. Julia uses 1-based indexing...
+
 ```julia
  names = ["Arthur", "Ford", "Zaphod", "Marvin", "Trillian", "Eddie"]
  names[0]        # this does not work, sorry Pythonista's
 
- names[1]        # Hell yeah!
+ names[1]        # hell yeah!
 
- names[end]      # Last element 
+ names[end]      # last element 
  
  names[end-1]    # second to last element 
 ```
@@ -44,7 +45,7 @@ Julia arrays can be of mixed type.
 Y = [42, "Universe", []]
 ```
 
-An important note is that the the type changes depending on the elements of the array
+The type of the array changes depending on the elements that make up the array.
 
 ```julia
 @show typeof(A)
@@ -52,14 +53,14 @@ An important note is that the the type changes depending on the elements of the 
 @show typeof(Y)
 ```
 
-When the elements of the arrays are mixed a the type is promoted to the closest common ancestor. For `Y` this is `Any`.  But an array of a integer and a float becomes an ...
+When the elements of the arrays are mixed, a the type is promoted to the closest common ancestor. For `Y` this is `Any`.  But an array of an integer and a float becomes an ...
 
 ```julia
 B = [1.1, 1]
 @show typeof(B)
 ```
 
-... array of Floats.
+... array of floats.
 
 Arrays behave like a stack, elements can be added to the back of the array, 
 
@@ -68,14 +69,14 @@ push!(names,"Eddie") # add a single element
 append!(names, ["Sam", "Gerard"]) # add an array
 ```
 
-Remember, a "!" is used to indicate an in place function. "Eddie" was appended as final element of the Array. `pop()` is used to return and remove the final element of an Array
+"Eddie" was appended as final element of the Array along with "Sam" and "Gerard". Remember, a "!" is used to indicate an in place function. `pop()` is used to return and remove the final element of an Array
 
 ```julia
 pop!(names)
 ```
 
 # Matrices
-One-dimensional is a tad boring. Let's go the 2D Arrays, matrices. 
+Let's add a dimension and go to 2D Arrays, matrices. It is all quite straightforward,
 
 ```julia
 
@@ -114,7 +115,7 @@ scores["humans"]
 ```
 
 ## Exercise
-
+**Suggestion, implementing ridge regression?**
 
 ```julia
 ```
