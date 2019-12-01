@@ -87,7 +87,7 @@ Z[1,:]  # slicing
 ```
 
 It is important to known that arrays and other collections are copied by reference.
-o
+
 ```julia
 R = Z
 
