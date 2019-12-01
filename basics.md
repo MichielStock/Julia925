@@ -3,19 +3,21 @@
 ## Basic computing
 
 ```julia
-1 + 2
+1 + 2       # adding integers
 
-1.0 + 2.0
+1.0 + 2.0   # adding floats
 
-2 / 4
+2 / 4       # standard division
 
-div(2, 4)
+div(2, 4)   # Computes 2/4 truncated to an integer
 
-35 \ 7
+35 \ 7      # inverse division 
 
-1 // 3
+1 // 3      # fractions
 
-'c'
+1//2 + 1//4 
+
+'c'        # characters (unicode)
 
 :symbol
 ```
