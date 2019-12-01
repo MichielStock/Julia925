@@ -1,6 +1,7 @@
 # Julia basics
 
 ## Basic computing
+Let's get started with the basics. Some mathematical operations, 
 
 ```julia
 1 + 2       # adding integers
@@ -19,30 +20,51 @@ div(2, 4)   # Computes 2/4 truncated to an integer
 
 'c'        # characters (unicode)
 
-:symbol
+:symbol    # symbols, mostly used for macros
 ```
+
+variable assignment,
 
 ```julia
 x = 2
 
-τ = 1 / 37  # fine structure constant
+τ = 1 / 37  # unicode variable names are allowed
 ```
+
+unicode! In most Julia editing environments, Unicode math symbols can be typed when starting with a "\ and hitting <TAB>.
 
 ```julia
-3x
+\alpha  # just hit <TAB>
 
-x += 2  # inplace update of x
 ```
+
+Operators are overrated.
+
+```julia
+5x         # operators are 
+```
+
+Strings are quite essential,
 
 ```julia
 mystery = "life, the universe and everything"
 ```
 
+and string interpolation is performed with `$`.
+
+
 ```julia
 println("The answer to $mystery is $(3*2*7)")
 ```
 
+Every binary arithmetic and bitwise operators have an updating version that assigns the result of the operation back into the left operand. The updating version of the binary operator is formed by placing a = immediately after the operator.
+
+```julia
+x += 2  # inplace update of x
+```
+
 ## Boolean operators
+From zero to one.
 
 ```julia
 # Boolean operators
@@ -62,6 +84,7 @@ println("The answer to $mystery is $(3*2*7)")
 ```
 
 ## Control flow
+The `if`, `else`, `elseif`-statement,
 
 ```julia
 if 4 > 3
@@ -73,12 +96,12 @@ else
 end
 ```
 
+Julia allows for some very condense control flow structures.
 ```julia
 y = condition ? valueiftrue : valueiffalse
 ```
 
 ## Looping
-
 ```julia
 characters = ["Harry", "Ron", "Hermione"]
 
@@ -111,6 +134,7 @@ end
 ```
 
 ## Functions
+Julia puts the fun in functions. User-defined functions can be declared as follows,
 
 ```julia
 function square(x)
@@ -125,6 +149,8 @@ square(2.0)
 square("ni")
 ```
 
+A more condensed version of of `square(x)`.
+
 ```julia
 s(x) = x * x
 ```
@@ -135,6 +161,8 @@ s([1, 2, 3, 4, 5])
 s.([1, 2, 3, 4, 5])
 ```
 
+Keyword arguments are defined using a semicolon in the back signature and a default value can be assigned. "Keywords" assigned before the semicolon are default values but their keywords are not used.  
+
 ```julia
 safelog(x, offset=0.1; base=10) = log(x + offset) / log(base)
 
@@ -144,6 +172,8 @@ safelog(0, 0.01)
 
 safelog(0, 0.01, base=2)
 ```
+
+When unsure of what a function does, the documentation can be viewed by adding a "?" in front of the function. 
 
 ```julia
 ?sort
@@ -162,6 +192,7 @@ my_unsorted_list
 ```
 
 ## Plotting
+Quite essential for scientific programming is the visualisation of the results. `Plots` is the Julia package that handles a lot of the visualisation.
 
 ```julia
 using Plots
