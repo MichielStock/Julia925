@@ -52,6 +52,8 @@ nextstate(l::Bool, s::Bool, r::Bool, rule::Integer) = nextstate(l, s, r, Int8(ru
 > **Assignment**: Create an 8 by 3 matrix `S` containing all possible states of three adjacent cells. Complete the function `nextstates`, which returns a vector containing the next state of the middle cell.
 
 ```julia;eval=false
+rule = ...
+
 S = ...
 
 function nextstates(S, rule)
