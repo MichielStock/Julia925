@@ -1,0 +1,104 @@
+---
+title : Getting started with Julia
+author : |
+  Michiel Stock
+  Bram De Jaegher
+  Daan Van Hauwermeiren
+date: December 2019
+---
+
+# Everything has a type
+
+All Julia objects, both those already defined as well as those you migh make yourself, have a type. The type system is the secret sauce, allowing Julia to be fast because code can be specialized for a certain combination of types. It is also supremely useful in combination with *multiple dispatch*, in which functions work differently depending on which types you feed into them.
+
+# Checking the type
+
+The type of objects can be assessed using the function `typeof`. For collections, `eltype` gives the types of the individual elements. Try the following examples. Note that types are are always capitalized!
+
+```julia
+a = 42; s = "mice"; f = 0.9; A = [1 2; 3 4];
+
+typeof(a)
+typeof(s)
+typeof(f)
+typeof(A)
+
+eltype(A)
+```
+
+All these types are *concrete types*. All Julia types are part of a hierarchical type system, forming a single, fully connected type graph. The concrete types are the leaves of this tree, whereas the inner nodes are *Abstract types*. As hinted by the name, these are abstract and cannot be instantiated. They however help with conceptially ordering the type system.
+
+We can find the supertype of a concrete or abstract type using the function `supertype`.
+
+```julia
+supertype(Int8)
+supertype(Float64)
+supertype(AbstractFloat)
+supertype(Real)
+supertype(Number)
+supertype(Any)
+```
+See how all the number are hierarchically represented? Note that any type is always a subtype of `Any`. We can check if an object is (sub)type using the function `isa`.
+
+```julia
+a isa Int  # int is concrete type Int64
+a isa Integer  # integer is abstract
+a isa Int8
+a isa Number
+```
+
+We can check if one type is a subtype of the second one using the binary operator `<:`.
+
+```julia; eval=false
+Float64 <: AbstractFloat
+Float16 <: AbstractFloat
+AbstractFloat <: Number
+Int <: Number
+Int <: AbstractFloat
+Integer <: Int
+```
+
+# Methods and dispatch
+
+When a function is run for the first time with a particular combinations of type inputs, it get compiled by the LLVM compiler. Such a specific function is refered to as a `method`.
+
+
+**Exercise**
+```julia
+f(x, y) = println("No life forms present")
+f(x::T, y::T) where {T} = x * y  # short for {T <: Any}
+f(x::Integer, y::Real) = 2x + y
+f(x::Int, y::Int) = 2x + 2y
+f(x::Integer, y::Float64) = x + 2y
+f(x::Float64, y::Real) = x - y
+f(x::Float64, y::Float64) = 2x - y
+```
+
+Predict what the result will be of the following evaluations.
+
+```julia; eval=false
+f(1, 2.0)
+f(1.0, 2)
+f(Int8(1), Int8(2))
+f(1.0, 2.0)
+f("een", 2)
+f("een", "twee")
+f(1, Float32(2.0))
+f(1, 2)
+```
+
+# Defining types
+
+The Strang matrix
+
+$$
+\begin{pmatrix}
+  -2 & 1& \cdots & 0 & 0 \\
+  1 & -2& \cdots & 0 & 0\\
+  \vdots  & \vdots  & \ddots & \vdots  \\
+  0 &0 & \cdots & -2 & 1\\
+0 &0 & \cdots & 1 & -2
+ \end{pmatrix}
+$$
+
+# Constructors
