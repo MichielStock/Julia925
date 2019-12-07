@@ -3,7 +3,7 @@ title : Project: automatic error propagation
 author : |
   Michiel Stock
   Bram De Jaegher
-  Daan?
+  Daan Van Hauwermeiren
 date: December 2019
 ---
 
@@ -31,22 +31,8 @@ $$
 
 Note that this is consistent with the above rules for multiplication. Let us implement the general formula for raising a measurement to the power $$p$$.
 
-
-
-
 We can implement this for all the standard mathematical functions one by one. However, Julia provides use with two efficient tools to do this in one swoop: automatic differentiation and metaprogramming. We just loop a list of functions of interest and automatically generate the correct approximate rule.
 
-
-```julia
-using ForwardDiff
-
-for f in [:sin, :cos, :tan, :exp, :log, :log2, :log10, :sqrt, :inv]
-    eval(quote
-        # this is a line of code generated using string interpolation
-        Base.$f(m::Measurement) = $f(m.x) ± abs(ForwardDiff.derivative($f, m.x) * m.σ)
-    end)
-end
-```
 
 Instead of processing the measurements and the standard error separately, suppose we could just make a new type of number which contains both the observed value and its uncertainty. And suppose we could just compute something with these numbers, plugging them into our formulas where the error is automatically accounted for using the standard error propagation rules. In Julia, it is dead simple to construct such new numbers and just overload existing functions such that they compute in the correct way.
 
@@ -57,35 +43,70 @@ The result is a new type `Measurement` containing both the value and the standar
 
 # Assignments
 
-1. Make an `Measurement` structure with two fields: the measured value `x` and its standard deviation `σ`. Make sure that both `x` and `σ` are of the same type and a subtype of `Real`.
+1. Make an `Measurement` structure with two fields: the measured value `x` and its standard deviation `σ` (`\sigma<TAB>`). Make sure that both `x` and `σ` are of the same type and a subtype of `Real`.
 2. Make a constructor for `Measurement`, such that an error is returned when a negative standard error is given.
 3. Make two functions `val` and `err`, which respecitivly return the value and the standard error of a measurement.
 4. Make a binary operator `±` (`\pm<TAB>`), such that `x ± σ` returns a new instance of the type `Measurement`. Try it on a value 4.0 with a standard error of 1.2.
 5. Overload all functions of scalar multiplication, adding and substracting measurements and adding a constant such that they correctly process measurements. Try some examples.
-6. ^: nonlinear function
-7. Run example meta programming.
-8. Exercis. with data.
+6. Overload the power function `^` such that one can raise `Measurement`s to a power. Note the special case `(x ± σ)^0` = `one(x) ± zero(σ)`.
+7. Run example to generate error functions for a whole range of functions using metaprogramming.
+8. Solve the small exercise using data.
 
-```julia
+**Assignment 1 and 2**
+
+```julia; eval=false
+struct Measurement
+    ...
+    function Measurement(...)
+        ...
+    end
+end
+```
+
+**Assignment 3**
+
+```julia; eval=false
+val(m::Measurement) = ...
+err(m::Measurement) = ...
+```
+
+**Assignment 4**
+
+Don't forget to add type annotations!
+
+```julia; eval=false
+±(x, σ) = ...
+```
+
+**Assignment 5**
+
+```julia; eval=false
 # scalar multiplication
-Base.:*(a::Real, m::Measurement) = a * m.x ± abs(a) * m.σ;
-Base.:/(m::Measurement, a::Real) = inv(a) * m;
+Base.:*(a::Real, m::Measurement) = ...
+Base.:/(m::Measurement, a::Real) = ...
 # adding and substracting measurements
-Base.:+(m1::Measurement, m2::Measurement) = (m1.x + m2.x) ± √(m1.σ^2 + m2.σ^2);
-Base.:-(m1::Measurement, m2::Measurement) = (m1.x - m2.x) ± √(m1.σ^2 + m2.σ^2);
-Base.:-(m::Measurement) = -m.x ± m.σ;
+Base.:+(m1::Measurement, m2::Measurement) = ...
+Base.:-(m1::Measurement, m2::Measurement) = ...
+Base.:-(m::Measurement) = ...
 # adding a constant
-Base.:+(m::Measurement, a::Real) = m + (a ± zero(a));
-Base.:+(a::Real, m::Measurement) = m + a;
+Base.:+(m::Measurement, a::Real) = ...
+Base.:+(a::Real, m::Measurement) = ...
 # multiplying two measurments
-Base.:*(m1::Measurement, m2::Measurement) = m1.x * m2.x ± (m1.x * m2.x) * √((m1.σ / m1.x)^2 + (m2.σ / m2.x)^2);
+Base.:*(m1::Measurement, m2::Measurement) = ...
 ```
 
-```julia
-Base.:^(m::Measurement, p::Integer) = m.x^2 ± abs(p*m.x^(p-1) * m.σ);
+```julia; eval=false
+Base.:^(m::Measurement, p::Integer) = ...
 ```
 
 
-```julia
-m^2
+```julia; eval=false
+using ForwardDiff
+
+for f in [:sin, :cos, :tan, :exp, :log, :log2, :log10, :sqrt, :inv]
+    eval(quote
+        # this is a line of code generated using string interpolation
+        Base.$f(m::Measurement) = $f(m.x) ± abs(ForwardDiff.derivative($f, m.x) * m.σ)
+    end)
+end
 ```
