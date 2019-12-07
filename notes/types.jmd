@@ -16,17 +16,17 @@ All Julia objects, both those already defined as well as those you migh make you
 The type of objects can be assessed using the function `typeof`. For collections, `eltype` gives the types of the individual elements. Try the following examples. Note that types are are always capitalized!
 
 ```julia
-a = 42; s = "mice"; f = 0.9; A = [1 2; 3 4];
+a = 42; s = "mice"; n = 0.9; A = [1 2; 3 4];
 
 typeof(a)
 typeof(s)
-typeof(f)
+typeof(n)
 typeof(A)
 
 eltype(A)
 ```
 
-All these types are *concrete types*. All Julia types are part of a hierarchical type system, forming a single, fully connected type graph. The concrete types are the leaves of this tree, whereas the inner nodes are *Abstract types*. As hinted by the name, these are abstract and cannot be instantiated. They however help with conceptially ordering the type system.
+All these types are *concrete types*. All Julia types are part of a hierarchical type system, forming a single, fully connected type graph. The concrete types are the leaves of this tree, whereas the inner nodes are *abstract types*. As hinted by the name, these are abstract and cannot be instantiated. They however help with conceptially ordering the type system.
 
 We can find the supertype of a concrete or abstract type using the function `supertype`.
 
@@ -60,10 +60,37 @@ Integer <: Int
 
 # Methods and dispatch
 
-When a function is run for the first time with a particular combinations of type inputs, it get compiled by the LLVM compiler. Such a specific function is refered to as a `method`.
+When a function is run for the first time with a particular combinations of type inputs, it get compiled by the LLVM compiler. Such a specific function is refered to as a `method`. Every time a function is run with a new combination of types of arguments, a suitable method is compiled. This is noticible when measuring running time. Compare
 
+```julia
+mynewfun(x) = x^2 + x
 
-**Exercise**
+A = [1 2; 3 4];
+
+# first run
+@time mynewfun(A)
+
+# second run
+@time mynewfun(A)
+
+# now with a float
+@time mynewfun(1)
+
+# new value, same type
+@time mynewfun(12)
+```
+
+The known methods can be found using the function `methods`. For example, check how many methods there are associated with the humble multiplication operator `*`.
+
+The arguments a function can take can be restricted using the `::`-operator. Here, if we restrict a function as `f(x::T)`, this means that `x` can be any type `<: T`. Can you explain the reasoning behind the following code? How does it process numbers? What does it do with strings?
+
+```julia
+twice(x::Number) = 2x
+twice(x::String) = x * x
+```
+
+> **Exercise** Can you predict the outcome of the following lines of code?
+
 ```julia
 f(x, y) = println("No life forms present")
 f(x::T, y::T) where {T} = x * y  # short for {T <: Any}
@@ -81,13 +108,59 @@ f(1, 2.0)
 f(1.0, 2)
 f(Int8(1), Int8(2))
 f(1.0, 2.0)
-f("een", 2)
-f("een", "twee")
+f("one", 2)
+f("one", "two")
 f(1, Float32(2.0))
 f(1, 2)
+f([1 1; 1 1], [2.0 2.0; 2.0 2.0])
+f([1 1; 1 1], [2 2; 2 2])
 ```
 
 # Defining types
+
+Abstract types are defined using the following simple syntax:
+
+```
+abstract type «name» end
+abstract type «name» <: «supertype» end
+```
+
+*Primitive types* exist of simple bits. Examples are `Float64` and `Int16`. You can declare your own types, though this is likely not something many do often in practice.
+
+*Composite types* (records, structs, or objects) are more exiting. They are often containers for several objects set to behave in a certain way. Take the following small example of defining types.
+
+```julia
+abstract type Pet end
+
+struct Cat <: Pet
+  name
+end
+
+struct Dog <: Pet
+  name
+end
+
+call(cat::Cat) = println("miaaw")
+call(dog::Dog) = println("woof")
+
+mycat = Cat("Appa")
+hisdog = Dog("Storm")
+
+call(mycat)
+call(hisdog)
+```
+
+```julia
+meets(pet1::Cat, pet2::Dog) = println("$(pet1.name) hisses at $(pet2.name)")
+meets(pet1::Dog, pet2::Cat) = println("$(pet1.name) barks at $(pet2.name)")
+meets(pet1::Cat, pet2::Cat) = println("$(pet1.name) ignors $(pet2.name)")
+meets(pet1::Dog, pet2::Dog) = println("$(pet1.name) sniff the but of $(pet2.name)")
+
+meets(mycat, hisdog)
+meets(hisdog, mycat)
+```
+
+# Case study: the Strang matrix
 
 The Strang matrix
 
@@ -101,4 +174,37 @@ $$
  \end{pmatrix}
 $$
 
-# Constructors
+```julia
+struct Strang <: AbstractMatrix{Int}
+  n
+  function Strang(n::Integer)
+    @assert n > 0 throw(AssertionError("n should be positive, got $n"))
+    new(n)
+  end
+end
+
+Base.eltype(S::Strang) = Int
+Base.size(S::Strang) = (S.n, S.n)
+Base.getindex(S::Strang, i, j) = i==j ? -2 : (abs(i-j)==1 ? 1 : 0)
+```
+
+That's it! Now, we have our own implementation of the Strang matrix. We have also given Julia just enough information such that it can also represent this nicely!
+
+```julia
+S = Strang(5)
+```
+
+Note that many other functionality just magically appears.
+
+```julia
+v = collect(1:5)
+S * v
+```
+
+> **Assignment** Though multiplication works, it is quite slow, because Julia has no sense of the special structure of Strang matrices. Overload the `*` function in Julia to provide quick multiplication.
+
+```julia; eval=false
+function Base.*(S::Strang, v::Vector)
+  ...
+end
+```
