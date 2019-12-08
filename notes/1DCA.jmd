@@ -1,10 +1,7 @@
 ---
-title : Project: 1D elementary cellular automata
-author : |
-  Michiel Stock
-  Bram De Jaegher
-  Daan?
-date: December 2019
+title : "Project: 1D elementary cellular automata"
+author : Michiel Stock, Bram De Jaegher, Daan Van Hauwermeiren
+date: 18 December 2019
 ---
 
 In this exercise, we simulate elementary one-dimensional cellular automata (CA). It is a simple application, which nevertheless illustrates many of the Julia programming concepts as it has all aspects of an individual-based model.
@@ -19,11 +16,11 @@ This means that if we assign one state to each combination, we have $2^8=256$ un
 
 An integer between 0 and 255 solely defines every elementary cellular automaton. The binary representation of this number determines the state updates. This is best explained by showing some examples.
 
-![](../figures/ElementaryCARules_900.gif)
+![](../figures/CArules.png)
 
 So starting from an initial state vector, we can represent the evolution of the states by a space-time diagram.
 
-![](../figures/ElementaryCA_850.gif)
+![](../figures/CAexamples.png)
 
 In implementing an elementary CA, we use cyclic boundary conditions. Here, we wrap the state vector around a circle: the right neighbor of the last cell is again the first cell (and *vice versa*).
 
@@ -36,7 +33,7 @@ We start by implementing the updating rule from a single state to the next. This
 Updating a cell depends only on the state of the cell and its two neighbors. Let us use three Boolean variables `(l, s, r)` to denote them. Here `s` is the state of the cell of interest, and `l` and `r` are the states of its left and right neighbor, respectively. An integer between 0 and 255 can represent the rule, hence an 8-bit number. The rule for updating a state is implemented below.
 
 ```julia
-nextstate(l::Bool, s::Bool, r::Bool, rule::Int8) = bitstring(rule)[8-(4r+2s+1r)] == '1'
+nextstate(l::Bool, s::Bool, r::Bool, rule::Int8) = bitstring(rule)[8-(4r+2s+1r)] == '1';
 ```
 
 Here, we have cleverly made use of the function `bitstring`, which transforms an 8-bit number in the corresponding bitstring.
@@ -46,7 +43,7 @@ Here, we have cleverly made use of the function `bitstring`, which transforms an
 The three Boolean variables are transformed into the correct index of this string. We might save ourselves the bother of ensuring that the argument `rule` is of the type `Int8` using dispatch.
 
 ```julia
-nextstate(l::Bool, s::Bool, r::Bool, rule::Integer) = nextstate(l, s, r, Int8(rule))
+nextstate(l::Bool, s::Bool, r::Bool, rule::Integer) = nextstate(l, s, r, Int8(rule));
 ```
 
 > **Assignment**: Create an 8 by 3 matrix `S` containing all possible states of three adjacent cells. Complete the function `nextstates`, which returns a vector containing the next state of the middle cell.
