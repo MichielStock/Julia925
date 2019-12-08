@@ -1,10 +1,8 @@
 ---
-title : Getting started with Julia
+title : The type system and multiple dispatch
 author : |
-  Michiel Stock
-  Bram De Jaegher
-  Daan Van Hauwermeiren
-date: December 2019
+  Michiel Stock, Bram De Jaegher, Daan Van Hauwermeiren
+date: 18 December 2019
 ---
 
 # Everything has a type
@@ -46,6 +44,8 @@ a isa Integer  # integer is abstract
 a isa Int8
 a isa Number
 ```
+
+Concrete types always have a fixed representation whereas abstract types can be anything. Concrete subtypes of `AbstractFloat` can be 16 bits (`Float16`), 32 bits (`Float32`), 64 bits (`Float64`) or arbitrary large (`BigFloat`).
 
 We can check if one type is a subtype of the second one using the binary operator `<:`.
 
@@ -91,8 +91,8 @@ twice(x::String) = x * x
 
 So why use dispatch?
 
-1. Controls the scope of the functions, for some types, there is no method, and we want an error if we use the wrong type.
-2. Because we wish functions to behave differently depending on the types you feed into them.
+1. Controls the **scope** of functions. For some types, there is no method, and we want an error if we use the wrong type.
+2. Because we wish functions to **behave differently** depending on the types you feed into them.
 
 Note that, generally seen, typing the functions is **not** needed to improve the performance of the functions.
 
@@ -108,7 +108,7 @@ f(x::Float64, y::Real) = x - y
 f(x::Float64, y::Float64) = 2x - y
 ```
 
-
+Gives
 
 ```julia; eval=false
 f(1, 2.0)
@@ -157,15 +157,15 @@ end
 Base.show(io::IO, pet::Pet) = print("pet $(pet.name)")
 
 # what kind of sound does the pet make?
-yells(cat::Cat) = println("miaaw")
-yells(dog::Dog) = println("woof")
+calls(cat::Cat) = println("miaaw")
+calls(dog::Dog) = println("woof")
 
 
 mycat = Cat("Appa")
 hisdog = Dog("Storm")
 
-yells(mycat)
-yells(hisdog)
+calls(mycat)
+calls(hisdog)
 ```
 
 Using dispatch, we can have custom behavior for the pets.

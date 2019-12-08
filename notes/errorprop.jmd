@@ -1,10 +1,7 @@
 ---
-title : Project: automatic error propagation
-author : |
-  Michiel Stock
-  Bram De Jaegher
-  Daan Van Hauwermeiren
-date: December 2019
+title : "Project: automatic error propagation"
+author : Michiel Stock, Bram De Jaegher, Daan Van Hauwermeiren
+date : 18 December 2019
 ---
 
 # What is error propagation?
@@ -15,9 +12,9 @@ A year later, after plowing through a basic probability course, error propagatio
 
 > Given two **independent** random variables $$X$$ and $$Y$$, the variance of a linear combination $$\text{Var}[aX+bY]=a^2\text{Var}[X] + b^2\text{Var}[Y]$$.
 
-Measurement errors are usually given by a standard deviation, the square root of the variance. Given this principle, error propagation is merely bookkeeping of the standard error on the measurement for various computations.
+Measurement errors are usually given by a standard deviation, the square root of the variance. Given this principle, error propagation is merely bookkeeping of the standard error on the measurement for various computations. This [table on error propagation](https://en.wikipedia.org/wiki/Propagation_of_uncertainty#Example_formulae) might be useful.
 
-For nonlinear functions, we can compute an approximate uncertainty propagation using a first-order Taylor approximation. We have, for any function $$f(x)$$:
+For nonlinear functions, we can compute an approximate uncertainty propagation using a first-order Taylor approximation. We have, for any function $f(x)$:
 
 $$
 f(x\pm \sigma) \approx f(x) \pm |f'(x)|\sigma\,.
@@ -29,7 +26,7 @@ $$
 (x\pm\sigma)^2 = x^2 \pm 2|x|\sigma\,.
 $$
 
-Note that this is consistent with the above rules for multiplication. Let us implement the general formula for raising a measurement to the power $$p$$.
+Note that this is consistent with the above rules for multiplication. Let us implement the general formula for raising a measurement to the power $p$.
 
 We can implement this for all the standard mathematical functions one by one. However, Julia provides use with two efficient tools to do this in one swoop: automatic differentiation and metaprogramming. We just loop a list of functions of interest and automatically generate the correct approximate rule.
 
@@ -95,10 +92,13 @@ Base.:+(a::Real, m::Measurement) = ...
 Base.:*(m1::Measurement, m2::Measurement) = ...
 ```
 
+**Assignment 6**
+
 ```julia; eval=false
 Base.:^(m::Measurement, p::Integer) = ...
 ```
 
+**Assignment 7**
 
 ```julia; eval=false
 using ForwardDiff
@@ -110,3 +110,26 @@ for f in [:sin, :cos, :tan, :exp, :log, :log2, :log10, :sqrt, :inv]
     end)
 end
 ```
+
+**Assignment 8**
+
+Let's apply this to in a somewhat realistic setting. Many methods in analytical chemistry are based on the law of [Beer-Lambert](https://en.wikipedia.org/wiki/Beer%E2%80%93Lambert_law). This law relates the absorption of a ray of light passing through a cuvet with the concentration of a solution. For a given reference intensity $I_0$ at concentration of 0 and a lower intensity $I$ when it passes through a solution of concentration $c$, we have
+
+$$
+\log \left(\frac{I_0}{I}\right) = \varepsilon c l\,,
+$$
+
+with $\varepsilon$ the molar extinction coefficient and $$l$$ the thickness of the cuvet.
+
+Suppose we want to determine the extinction coefficient for some substance, using a cuvet of thickness $0.02\pm 0.001$ and a reference solution of a concentration of $0.73\pm 0.02$ M.
+
+We perform some intensity measurements, with associated measurement errors.
+
+| $I0$ | $\sigma_{I0}$ | $I1$ | $\sigma_{I1}$ |
+|------|---------------|------|---------------|
+| 0.8  | 0.14          | 0.2  | 0.12          |
+| 1.1  | 0.11          | 0.3  | 0.07          |
+| 1.2  | 0.08          | 0.4  | 0.101         |
+
+
+**Estimate the concentration of the solution.**
