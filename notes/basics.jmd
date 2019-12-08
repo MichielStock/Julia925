@@ -107,7 +107,7 @@ end
 ```
 
 Julia allows for some very condense control flow structures.
-```julia
+```julia;eval = false
 y = condition ? valueiftrue : valueiffalse
 ```
 
