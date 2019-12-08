@@ -41,10 +41,10 @@ unicode! In most Julia editing environments, Unicode math symbols can be typed w
 Operators are overrated.
 
 ```julia
-5x         # operators are 
+5x         # This works
 ```
 
-Strings are quite essential,
+But strings are quite essential,
 
 ```julia
 mystery = "life, the universe and everything"
@@ -55,6 +55,13 @@ and string interpolation is performed with `$`.
 
 ```julia
 println("The answer to $mystery is $(3*2*7)")
+```
+
+It is possible to create immutable variables (cannot be changes). Quite handy for physical constants but is rather cumbersome to achieve in Python. The syntax is very similar to C++,
+
+```julia
+const ϵ₀ = 8.8541788128e-12  # vacuum electric permittivity
+ϵ₀ = 8.9e-12                 # nope
 ```
 
 Every binary arithmetic and bitwise operators have an updating version that assigns the result of the operation back into the left operand. The updating version of the binary operator is formed by placing a = immediately after the operator.
