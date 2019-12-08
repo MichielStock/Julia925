@@ -1,6 +1,13 @@
-# Julia basics
+---
+title : Getting started with Julia
+author : |
+  Michiel Stock
+  Bram De Jaegher
+  Daan?
+date: December 2019
+---
 
-## Basic computing
+# Basic computing
 Let's get started with the basics. Some mathematical operations, 
 
 ```julia
@@ -21,6 +28,7 @@ div(2, 4)   # Computes 2/4 truncated to an integer
 'c'        # characters (unicode)
 
 :symbol    # symbols, mostly used for macros
+
 ```
 
 variable assignment,
@@ -31,10 +39,10 @@ x = 2
 τ = 1 / 37  # unicode variable names are allowed
 ```
 
-unicode! In most Julia editing environments, Unicode math symbols can be typed when starting with a "\ and hitting <TAB>.
+unicode! In most Julia editing environments, unicode math symbols can be typed when starting with a "\ and hitting [TAB].
 
 ```julia
-\alpha  # just hit <TAB>
+# type \alpha  and <TAB>
 
 ```
 
@@ -57,20 +65,15 @@ and string interpolation is performed with `$`.
 println("The answer to $mystery is $(3*2*7)")
 ```
 
-It is possible to create immutable variables (cannot be changes). Quite handy for physical constants but is rather cumbersome to achieve in Python. The syntax is very similar to C++,
 
-```julia
-const ϵ₀ = 8.8541788128e-12  # vacuum electric permittivity
-ϵ₀ = 8.9e-12                 # nope
-```
-
-Every binary arithmetic and bitwise operators have an updating version that assigns the result of the operation back into the left operand. The updating version of the binary operator is formed by placing a = immediately after the operator.
+All binary arithmetic and bitwise operators have an updating version that assigns the result of the operation back into the left operand. The updating version of the binary operator is formed by placing a, `=`, immediately after the operator.
 
 ```julia
 x += 2  # inplace update of x
+x += 2  # inplace update of x
 ```
 
-## Boolean operators
+# Boolean operators
 From zero to one.
 
 ```julia
@@ -90,8 +93,8 @@ From zero to one.
 2 < 3 < 2  # => false
 ```
 
-## Control flow
-The `if`, `else`, `elseif`-statement,
+# Control flow
+The `if`, `else`, `elseif`-statement is instrumental to any programming language,
 
 ```julia
 if 4 > 3
@@ -108,7 +111,7 @@ Julia allows for some very condense control flow structures.
 y = condition ? valueiftrue : valueiffalse
 ```
 
-## Looping
+# Looping
 ```julia
 characters = ["Harry", "Ron", "Hermione"]
 
@@ -127,7 +130,7 @@ for (char, pet) in zip(characters, pets)
 end
 ```
 
-```julia
+```julia;eval = false
 n = 1675767616;
 
 while n > 1
@@ -140,7 +143,7 @@ while n > 1
 end
 ```
 
-## Functions
+# Functions
 Julia puts the fun in functions. User-defined functions can be declared as follows,
 
 ```julia
@@ -153,7 +156,7 @@ square(2)
 
 square(2.0)
 
-square("ni")
+square("ni")   # the multiplication of strings is defined as a concatenation
 ```
 
 A more condensed version of of `square(x)`.
@@ -162,13 +165,16 @@ A more condensed version of of `square(x)`.
 s(x) = x * x
 ```
 
-```julia
-s([1, 2, 3, 4, 5])
-
-s.([1, 2, 3, 4, 5])
+Passing an array to a function that takes a single element as argument takes a special syntax. By putting a `.` before the brackets, the function is executed on all the elements of the Array. More on this in **Part3?: collections**.
+```julia;eval = false
+s([1, 2, 3, 4, 5])   # Multiplication is not defined for Arrays
 ```
 
-Keyword arguments are defined using a semicolon in the back signature and a default value can be assigned. "Keywords" assigned before the semicolon are default values but their keywords are not used.  
+```julia
+s.([1, 2, 3, 4, 5])  # This is an elements-wise execution of s()
+```
+
+Keyword arguments are defined using a semicolon in the back signature and a default value can be assigned. "Keywords" assigned before the semicolon are default values but their keywords are not ignored.  
 
 ```julia
 safelog(x, offset=0.1; base=10) = log(x + offset) / log(base)
@@ -183,8 +189,10 @@ safelog(0, 0.01, base=2)
 When unsure of what a function does, the documentation can be viewed by adding a "?" in front of the function. 
 
 ```julia
-?sort
+# type ?sort and hit <ENTER>
 ```
+
+For a lot of standard Julia functions a in-place version is defined. In-place means that the function changes one of the input arguments of the function. As an example, `sort()` sorts and returns the array passed as argument, it does not change the original array. In contrast, `sort!()` is the inplace version of sort and directly sorts the array passed as argument.
 
 ```julia
 my_unsorted_list = [4, 5, 9, 7, 1, 9]
@@ -198,8 +206,8 @@ sort!(my_unsorted_list)
 my_unsorted_list
 ```
 
-## Plotting
-Quite essential for scientific programming is the visualisation of the results. `Plots` is the Julia package that handles a lot of the visualisation.
+# Plotting
+Quite essential for scientific programming is the visualisation of the results. `Plots` is the Julia package that handles a lot of the visualisation. `rand(10)`, returns an array of 10 random floats between 0 and 1. 
 
 ```julia
 using Plots
@@ -218,4 +226,6 @@ plot(0:0.1:10, x -> sin(x) / x, xlabel="x", ylabel="sin(x)/x", legend=:none)
 contour(-5:0.1:5, -10:0.1:10, (x, y) -> 3x^2-4y^2 + x*y/6)
 ```
 
-## Exercise
+# Exercise
+
+
