@@ -1,16 +1,21 @@
 using Weave
 
-filename1 = "basics"
+filename = "basics"
+notesDir = "notes/"
+notebookDir = "notebooks/"
 
 
-function cleanTemps(filename;exts=[".out", ".log", ".aux", ".pdf"])
+function cleanTemps(filename,notesDir;exts=[".out", ".log", ".aux"])
   for ext in exts
-    rm(filename1 * ext)
+    rm(notesDir * filename * ext)
   end
 end
 
 # Basics
-println("Building 'Basics'...")
-weave(filename1 * ".jmd", doctype="md2pdf")
-cp(filename1 * ".pdf", "notes/" * filename1 * ".pdf"; force=true)
-cleanTemps(filename1)
+println("Building basics...")
+file = filename * ".jmd"                              # file = filename + extension
+
+weave(file; doctype="md2pdf",
+      out_path = notesDir)                            # weaving notes
+cleanTemps(filename,notesDir)                         # removing ugly .tex perifery
+convert_doc(file, notebookDir * filename * ".ipynb")  # weaving notebooks
