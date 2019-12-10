@@ -196,9 +196,50 @@ scores["humans"]
 
 ```
 
+
+
+
 # Exercise
-**Suggestion, implementing ridge regression?**
-* [http://ee263.stanford.edu/notes/julia_matrices_slides.pdf](http://ee263.stanford.edu/notes/julia_matrices_slides.pdf)
+## Ridge regression
+Ridge regression can be seen as an extension of ordinary least squares regression,
+
+$$\beta\mathbf{x} =\mathbf{b}\, ,$$
+
+where a matrix $\beta$ is sought which minimises the sum of squared residuals between the model and the observations,
+
+$$SSE(\beta) = (y - \beta X)^T (y - \beta X)$$
+
+In some cases it is adviceable to add a regularisation term to this objective function,
+
+$$SSE(\beta) = (y - \beta X)^T (y - \beta X) + \lambda \left\lVert X \right\rVert^2_2 \, , $$
+
+this is known as ridge regression. The matrix $\beta$ that minimises the objective function can be computed analytically.
+
+$$\beta = \left(X^T X + \lambda I \right)^{-1}X^T y$$
+
+Let us look at an example, we found some data on the evolution of human and dolphin intelligence.
 
 ```julia
+using Plots
+
+blue = "#8DC0FF"
+red = "#FFAEA6"
+
+t = 0:10:3040
+ϵ₁ = randn(length(t))*15     # noise on Dolphin IQ
+ϵ₂ = randn(length(t))*20     # noise on Human IQ
+
+Y₁ = dolphinsIQ = t/12 + ϵ₁
+Y₂ = humanIQ = t/20 + ϵ₂
+
+scatter(t,Y₁; label="Dolphins", color=blue,
+  ylabel="IQ (-)", xlabel ="Time (year BC)", legend=:topleft)
+scatter!(t,Y₂; label="Humans", color=red)
+
 ```
+
+> "For instance, on the planet Earth, man had always assumed that he was more intelligent than dolphins because he had achieved so much - the wheel, New York, wars and so on - whilst all the dolphins had ever   done was muck about in the water having a good time. But conversely, the dolphins had always believed that they were far more intelligent than man - for precisely the same reasons."
+>
+> *Hitchhikers guide to the galaxy*
+
+**Assignment:** Plot the trend of human vs. dolphin intelligence by implementing the analytical solution for ridge regression.
