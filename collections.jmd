@@ -3,12 +3,12 @@ title : Collections
 author : |
   Michiel Stock
   Bram De Jaegher
-  Daan?
+  Daan Van Hauwermeiren
 date: December 2019
 ---
 
 # Arrays
-Let us start of with the Julia `Array`. It is very similar to lists in Python. A list is defined as follows,
+Let us start of with `Array`s. It is very similar to lists in Python. An `Array` is defined as follows,
 
 ```julia
 A = []            # empty array
@@ -22,21 +22,29 @@ Let's start by eating the frog. Julia uses 1-based indexing...
 ```julia
  names = ["Arthur", "Ford", "Zaphod", "Marvin", "Trillian", "Eddie"]
  names[0]        # this does not work, sorry Pythonista's
+```
 
+```julia
  names[1]        # hell yeah!
-
+```
+```julia
  names[end]      # last element
-
+```
+```julia
  names[end-1]    # second to last element
 ```
 
-Array slicing and slicing with assignment:
+Slicing arrays is intuitive, 
 ```julia
-
   names[3:6]
+```
 
+and slicing with assignment too.
+```julia
   names[end-1:end] = ["Slartibartfast","The Whale and the Bowl of Petunias"]
+```
 
+```julia
   names
 ```
 
@@ -55,7 +63,7 @@ The type of the array changes depending on the elements that make up the array.
 @show typeof(Y)
 ```
 
-When the elements of the arrays are mixed, a the type is promoted to the closest common ancestor. For `Y` this is `Any`.  But an array of an integer and a float becomes an ...
+When the elements of the arrays are mixed, the type is promoted to the closest common ancestor. For `Y` this is `Any`.  But an array of an integer and a float becomes an ...
 
 ```julia
 B = [1.1, 1]
@@ -86,7 +94,7 @@ zeros(Int8,5)
 ```
 
 ## Comprehensions and list-like operations
-Comprehensions are a concise and powerful way to construct arrays and are very loved by in the Python community
+Comprehensions are a concise and powerful way to construct arrays and are very loved by the Python community
 
 ```julia
 Y = [1, 2, 3, 4, 5, 6, 8, 9, 8, 6, 5, 4, 3, 2, 1]
@@ -112,11 +120,11 @@ Let's add a dimension and go to 2D Arrays, matrices. It is all quite straightfor
 
 ```julia
 
-Z = [0 1 1; 2 3 5; 8 13 21; 34 55 89]
+@show Z = [0 1 1; 2 3 5; 8 13 21; 34 55 89]
 
-Z[3,2]  # indexing
+@show Z[3,2]  # indexing
 
-Z[1,:]  # slicing
+@show Z[1,:]  # slicing
 ```
 
 It is important to known that arrays and other collections are copied by reference.
@@ -135,7 +143,7 @@ R[1,1] = 42
 `deepcopy()` can be used to make a completely dereferenced object.
 
 ## Concatenation
-Arrays can be constructed and also concatenated using the following functions
+Arrays can be constructed and also concatenated using the following functions,
 
 ```julia
 Z = [0 1 1; 2 3 5; 8 13 21; 34 55 89]
@@ -159,7 +167,7 @@ B = [ 3 10; 4 1 ;7 1]
 A*B
 ```
 
-Element-wise operation are done with "dot" operations, for every binary operation like `^` there is a "dot" operation `.^` to perform element-by-element on arrays.
+Element-wise operation are done with "dot" operations, for every binary operation like `^` there is a "dot" operation `.^` to perform element-by-element exponentiation on arrays.
 
 ```julia
 Y = [10 10 10; 20 20 20]
@@ -171,7 +179,7 @@ Under the hood Julia is looping over the elements of `Y`. So a sequence of dot-o
 Y.^2 .+ cos.(Y)
 ```
 
-Did you notice that dot-operations are also applicable to functions, even user-defined functions?As programmers we are by lazy by definition and all these dots are a lot of work. The `@.` macro does this for us
+Did you notice that dot-operations are also applicable to functions, even user-defined functions? As programmers we are by lazy by definition and all these dots are a lot of work. The `@.` macro does this for us
 
 ```julia
 Y.^2 .+ cos.(Y) == @. Y^2 + cos(Y)
@@ -189,21 +197,22 @@ Some of the other collections include tuples, dictionaries and others.
 
 ```julia
 tupleware = ("tuple", "ware") # tuples
+```
 
+```julia
 scores = Dict("humans" => 2, "vogons" => 1) # dictionaries
+```
 
+```julia
 scores["humans"]
 
 ```
 
-
-
-
-# Exercise
+# Exercises
 ## Ridge regression
 Ridge regression can be seen as an extension of ordinary least squares regression,
 
-$$\beta\mathbf{x} =\mathbf{b}\, ,$$
+$$\beta X =b\, ,$$
 
 where a matrix $\beta$ is sought which minimises the sum of squared residuals between the model and the observations,
 
@@ -243,3 +252,14 @@ scatter!(t,Y₂; label="Humans", color=red)
 > *Hitchhikers guide to the galaxy*
 
 **Assignment:** Plot the trend of human vs. dolphin intelligence by implementing the analytical solution for ridge regression.
+
+```julia;eval = false
+
+β₁ = #...
+β₂ = #...
+
+Y₁ = β₁*t
+Y₂ = β₂*t
+
+```
+
