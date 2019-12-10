@@ -1,6 +1,10 @@
-authors = ["michielstock <michielfmstock@gmail.com>"]
 name = "Julia925"
 uuid = "fbec8748-dd6a-11e9-2673-f1e835973bd1"
+authors = ["michielstock <michielfmstock@gmail.com>"]
 version = "0.1.0"
 
+[compat]
+julia = "1"
+
 [deps]
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
