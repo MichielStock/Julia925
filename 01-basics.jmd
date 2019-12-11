@@ -15,6 +15,7 @@ Let's get started with the basics. Some mathematical operations,
 2 / 4       # standard division
 
 div(2, 4)   # Computes 2/4 truncated to an integer
+2 ÷ 4
 
 35 \ 7      # inverse division
 
@@ -61,6 +62,16 @@ and string interpolation is performed with `$`.
 println("The answer to $mystery is $(3*2*7)")
 ```
 
+repetitions of strings can be done using the operators `*` and `^`.
+This use of `*` and `^` makes sense by analogy with multiplication and exponentiation. Just as `4^3` is equivalent to `4*4*4`, we expect `"Spam"^3` to be the same as `"Spam"*"Spam"*"Spam"`, and it is.
+
+```julia
+breakfast = "eggs"
+abetterbreakfast = "SPAM"
+println(breakfast * abetterbreakfast)
+println(breakfast * abetterbreakfast^3 * breakfast)
+```
+
 All binary arithmetic and bitwise operators have an updating version that assigns the result of the operation back into the left operand. The updating version of the binary operator is formed by placing a, `=`, immediately after the operator.
 
 ```julia; term=true
@@ -93,6 +104,9 @@ From zero to one.
 # Comparisons can be chained
 1 < 2 < 3
 2 < 3 < 2
+# Logical operators
+true && true
+true || false
 ```
 
 Likewise, we have the Boolean logic operators `&&` (AND), `||` (OR) and `⊻` (XOR, exclusive or).
@@ -159,6 +173,16 @@ pets = ["Hedwig", "Pig", "Crookhanks"]
 
 for (char, pet) in zip(characters, pets)
   println("$char has $pet as a pet")
+end
+```
+
+Strings can also be looped
+
+```julia
+getme = "a shrubbery"
+
+for letter ∈ getme
+  println("$letter")
 end
 ```
 
@@ -265,6 +289,26 @@ sort!(my_unsorted_list)
 my_unsorted_list
 ```
 
+Specific functions can be generated if you have more information on the input type.
+This is called multiple dispatch.
+
+The `::` operator attaches type annotations to expressions and variables.
+
+How does the documentation for the function square look like after you executed the cell below?
+
+```julia
+function square(x::Float64)
+  println("using function with floats")
+  result = x * x
+  return result
+end
+
+println(square(4))
+println(square(4.))
+```
+
+More about types in the next section !
+
 # Plotting
 Quite essential for scientific programming is the visualisation of the results. `Plots` is the Julia package that handles a lot of the visualisation. `rand(10)`, returns an array of 10 random floats between 0 and 1.
 
@@ -272,7 +316,7 @@ Quite essential for scientific programming is the visualisation of the results. 
 using Plots
 
 plot(1:10, rand(10), label="first")
-plot!(1:10, rand(10), label="second")
+plot!(1:10, rand(10), label="second") # adding to current figure using plot!
 
 scatter!([1:10], randn(10), label="scatter")
 
@@ -282,11 +326,79 @@ title!("My pretty Julia plot")
 ```
 
 ```julia
-plot(0:0.1:10, x -> sin(x) / x, xlabel="x", ylabel="sin(x)/x", legend=:none)
+# notice the use of a symbol as an argument !
+plot(0:0.1:10, x -> sin(x) / x, xlabel="x", ylabel="sin(x)/x", color=:red, marker=:square, legend=:none)
 ```
 
 ```julia
 contour(-5:0.1:5, -10:0.1:10, (x, y) -> 3x^2-4y^2 + x*y/6)
 ```
 
-# Exercise
+# Exercises
+
+## 1
+
+Write a function named `rightjustify` that takes a string named `s` as a parameter and prints the string with enough leading spaces so that the last letter of the string is in column 70 of the display.
+
+Use string concatenation and repetition. Also, Julia provides a built-in function called `length`. Check what it does!
+
+```julia;eval = false
+function rightjustify()
+end
+```
+
+## 2
+
+1. Write a function `printgrid` that draws a grid like the following:
+
+```julia;eval = false
++ - - - - + - - - - +
+|         |         |
+|         |         |
+|         |         |
+|         |         |
++ - - - - + - - - - +
+|         |         |
+|         |         |
+|         |         |
+|         |         |
++ - - - - + - - - - +
+```
+
+2. Write a function that draws a similar grid with four rows and four columns.
+
+Tips:
+
+To print more than one value on a line, you can print a comma-separated sequence of values:
+
+`println("+", "-")`
+
+The function `print` does not advance to the next line.
+
+```julia;eval = false
+function printgrid()
+end
+```
+
+## 3
+
+The function `time` returns the current Greenwich Mean Time in seconds since "the epoch", which is an arbitrary time used as a reference point. On UNIX systems, the epoch is 1 January 1970.
+Write a script that reads the current time and converts it to a time of day in hours, minutes, and seconds, plus the number of days since the epoch.
+
+```julia;eval = false
+```
+
+## 4
+
+Fermat’s Last Theorem says that there are no positive integers $a$, $b$, and $c$ such that
+
+$a^n + b^n = c^n$
+
+for any value of $n$ greater than 2.
+
+1. Write a function named `checkfermat` that takes four parameters ($a$, $b$, $c$ and $n$) and checks to see if Fermat’s theorem holds. If $n$ is greater than 2 and $a^n + b^n == c^n$ the program should print, "Holy smokes, Fermat was wrong!" Otherwise the program should print, "No, that doesn’t work."
+
+2. Write a function that prompts the user to input values for $a$, $b$, $c$ and $n$, converts them to integers, and uses checkfermat to check whether they violate Fermat’s theorem. Tip: check the functions `readline` and `parse`
+
+```julia;eval = false
+```
