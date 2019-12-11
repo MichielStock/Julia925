@@ -8,7 +8,7 @@ date: December 2019
 ---
 
 # Arrays
-Let us start of with `Array`s. It is very similar to lists in Python. An `Array` is defined as follows,
+Let us start of with `Array`s. It is very similar to lists in Python, though can have more than one dimensions. An `Array` is defined as follows,
 
 ```julia
 A = []            # empty array
@@ -34,7 +34,7 @@ Let's start by eating the frog. Julia uses 1-based indexing...
  names[end-1]    # second to last element
 ```
 
-Slicing arrays is intuitive, 
+Slicing arrays is intuitive,
 ```julia
   names[3:6]
 ```
@@ -74,6 +74,15 @@ eltype(B)   # gives the type of the elements
 
 ... array of floats.
 
+Julia allows the fexibility of having mixed types, though this will hinder performance, as the compiler can no longer optimize for the type. Basically, if you process an array of `Any`s, your code will be as slow as Python.
+
+To create an array of a particular type, just use `Type[]`.
+
+```julia
+Float64[1, 2, 3]
+```
+
+
 ## Initialisation
 Arrays can be initialised in the classic, very Pythonesque ways.
 
@@ -82,18 +91,19 @@ C = []  # empty
 
 zeros(5)      # row vector of 5 zeroes
 ones(3,3)     # 3X3 matrix of 1's, will be discussed later on
-fill(0.5 ,10) # in case you want to fill a matrix with a specific value
+fill(0.5, 10) # in case you want to fill a matrix with a specific value
 
 rand(2)    # row vector of 2 random floats [0,1]
 randn(2)   # same but normally-distributed random numbers
 ```
-Sometimes it is better to provide a specific type for initialisation
+Sometimes it is better to provide a specific type for initialisation. `Float64` is often the default.
 
 ```julia
-zeros(Int8,5)
+zeros(Int8, 5)
 ```
 
 ## Comprehensions and list-like operations
+
 Comprehensions are a concise and powerful way to construct arrays and are very loved by the Python community
 
 ```julia
@@ -105,7 +115,7 @@ dY = [Y[i-1] - 2*Y[i] + Y[i+1] for i=2:length(Y)-1] # central difference
 Arrays behave like a stack, elements can be added to the back of the array,
 
 ```julia
-push!(names,"Eddie") # add a single element
+push!(names, "Eddie") # add a single element
 append!(names, ["Sam", "Gerard"]) # add an array
 ```
 
@@ -116,6 +126,7 @@ pop!(names)
 ```
 
 # Matrices
+
 Let's add a dimension and go to 2D Arrays, matrices. It is all quite straightforward,
 
 ```julia
@@ -149,16 +160,28 @@ Arrays can be constructed and also concatenated using the following functions,
 Z = [0 1 1; 2 3 5; 8 13 21; 34 55 89]
 Y = rand(4,3)
 
-cat(Z,Y,dims = 2)                # concatenation along a specified dimension
+cat(Z, Y, dims=2)                # concatenation along a specified dimension
 
-cat(Z,Y,dims = 1) == vcat(Z,Y) == [Z;Y]   # vertical concatenation
+cat(Z, Y, dims=1) == vcat(Z,Y) == [Z;Y]   # vertical concatenation
 
-cat(Z,Y,dims = 2) == hcat(Z,Y) == [Z Y]   # horizontal concatenation
+cat(Z,Y,dims=2) == hcat(Z,Y) == [Z Y]   # horizontal concatenation
+```
 
+Note that `;` is an operator to use `vcat`, e.g.
+
+```julia
+[zeros(2, 2) ones(2, 1); ones(1, 3)]
+```
+
+This can lead to strange behaviour. Explain the following difference.
+
+```julia; term = true
+[1  2-3]
+[1 2 -3]
 ```
 
 ## Vector operations
-By default the `*` operator is overloaded for matrix-matrix multiplication
+By default the `*` operator is used for matrix-matrix multiplication
 
 ```julia
 A = [2 4 3; 3 1 5]
@@ -167,7 +190,7 @@ B = [ 3 10; 4 1 ;7 1]
 A*B
 ```
 
-Element-wise operation are done with "dot" operations, for every binary operation like `^` there is a "dot" operation `.^` to perform element-by-element exponentiation on arrays.
+This is the Julian way, since functions act on the objects and element-wise operation are done with "dot" operations. For every function or binary operation like `^` there is a "dot" operation `.^` to perform element-by-element exponentiation on arrays.
 
 ```julia
 Y = [10 10 10; 20 20 20]
@@ -186,13 +209,15 @@ Y.^2 .+ cos.(Y) == @. Y^2 + cos(Y)
 ```
 
 # Higher dimensional arrays
+
 Matrices can be generalised to multiple dimensions.
 
 ```julia
-X = rand(3,3,3)
+X = rand(3, 3, 3)
 ```
 
 # Other collections
+
 Some of the other collections include tuples, dictionaries and others.
 
 ```julia
@@ -209,7 +234,9 @@ scores["humans"]
 ```
 
 # Exercises
+
 ## Ridge regression
+
 Ridge regression can be seen as an extension of ordinary least squares regression,
 
 $$\beta X =b\, ,$$
@@ -251,9 +278,11 @@ scatter!(t,Y₂; label="Humans", color=red)
 >
 > *Hitchhikers guide to the galaxy*
 
-**Assignment:** Plot the trend of human vs. dolphin intelligence by implementing the analytical solution for ridge regression.
+**Assignment:** Plot the trend of human vs. dolphin intelligence by implementing the analytical solution for ridge regression. For this you need the uniform scaling operator `I`, found in the `LinearAlgebra` package. Use $\lambda=0.01$.
 
 ```julia;eval = false
+
+using LinearAlgebra
 
 β₁ = #...
 β₂ = #...
