@@ -1,6 +1,6 @@
 using Weave
 
-filename = "basics"
+filenames = ["basics","collections"]
 notesDir = "notes/"
 notebookDir = "notebooks/"
 
@@ -11,11 +11,13 @@ function cleanTemps(filename,notesDir;exts=[".out", ".log", ".aux"])
   end
 end
 
-# Basics
-println("Building basics...")
-file = filename * ".jmd"                              # file = filename + extension
+for filename in filenames
+  # Basics
+  println("Building $(filename)...")
+  file = filename * ".jmd"                              # file = filename + extension
 
-weave(file; doctype="md2pdf",
-      out_path = notesDir)                            # weaving notes
-cleanTemps(filename,notesDir)                         # removing ugly .tex perifery
-convert_doc(file, notebookDir * filename * ".ipynb")  # weaving notebooks
+  weave(file; doctype="md2pdf",
+        out_path = notesDir)                            # weaving notes
+  cleanTemps(filename,notesDir)                         # removing ugly .tex perifery
+  convert_doc(file, notebookDir * filename * ".ipynb")  # weaving notebooks
+end
