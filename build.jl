@@ -1,6 +1,7 @@
 using Weave
 
-filenames = ["basics","collections"]
+filenames = ["01-basics", "02-collections", "03-types" , 
+              "04-project-errorprop" , "05-project-1DCA"]
 notesDir = "notes/"
 notebookDir = "notebooks/"
 
