@@ -7,7 +7,7 @@ date: December 2019
 # Basic computing
 Let's get started with the basics. Some mathematical operations,
 
-```julia
+```julia; term=true
 1 + 2       # adding integers
 
 1.0 + 2.0   # adding floats
@@ -25,12 +25,11 @@ div(2, 4)   # Computes 2/4 truncated to an integer
 'c'        # characters (unicode)
 
 :symbol    # symbols, mostly used for macros
-
 ```
 
 variable assignment,
 
-```julia
+```julia; term=true
 x = 2
 
 τ = 1 / 37  # unicode variable names are allowed
@@ -107,7 +106,7 @@ true ⊻ false
 true ⊻ true
 ```
 
-> **Question**: predict the value of the following statements.
+> **Question**: predict the outcomes of the following statements.
 
 ```julia; eval=false
 x, y = true, false
@@ -135,7 +134,7 @@ Julia allows for some very condense control flow structures.
 y = condition ? valueiftrue : valueiffalse
 ```
 
-> **Assignment** Compute the clip function $\min(0, \max(1, x))$ for a given $x$, without making use of the functions `min` and `max`.
+> **Assignment** Complete the clip function: $\min(0, \max(1, x))$ for a given $x$, without making use of the functions `min` and `max`.
 
 ```julia; eval=false
 x = 2.0
@@ -280,9 +279,13 @@ scatter!([1:10], randn(10), label="scatter")
 xlabel!("x")
 ylabel!("f(x)")
 title!("My pretty Julia plot")
+```
 
+```julia
 plot(0:0.1:10, x -> sin(x) / x, xlabel="x", ylabel="sin(x)/x", legend=:none)
+```
 
+```julia
 contour(-5:0.1:5, -10:0.1:10, (x, y) -> 3x^2-4y^2 + x*y/6)
 ```
 
