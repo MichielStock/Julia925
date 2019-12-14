@@ -193,7 +193,7 @@ struct Point{T}
     y::T
 end
 ```
-So here, each coordinate of the type `Point` has two attributes `x` and `y` of the same type. These so-called *parametric types* allow for processing the structures the right way.
+So here, each coordinate of the type `Point` has two attributes, `x` and `y`, of the same type. These so-called *parametric types* allow for processing the structures the right way.
 
 ```julia; term=true
 p = Point(1.0, 2.0)
@@ -201,7 +201,7 @@ p = Point(1.0, 2.0)
 Point(1, 2)
 ```
 
-But what will happen if you type `Point(1, 2.0)`?
+But what will happen if you evaluate `Point(1, 2.0)`?
 
 Parametric types can be used in dispatch. For example, if we want to compute the norm of a Point, this would only make sense if Point is of type real.
 
@@ -274,10 +274,9 @@ $$
 
 The specific structure makes computing with this matrix often more straightforward than for general matrices. Let us implement a `Strang` matrix type to work with this!
 
-
-```julia
+```julia;
 struct Strang <: AbstractMatrix{Int}
-  n
+  n::Int
   function Strang(n::Integer)
     @assert n > 0 throw(AssertionError("n should be positive, got $n"))
     new(n)
@@ -288,6 +287,8 @@ Base.eltype(S::Strang) = Int
 Base.size(S::Strang) = (S.n, S.n)
 Base.getindex(S::Strang, i, j) = i==j ? -2 : (abs(i-j)==1 ? 1 : 0)
 ```
+
+> **Optional assignment** Before running the code, modify the `struct` such that `Strang` is paramterically typed, with a constructor, for example, `Strang(Int, n)` generates an $n \times n$ Strang matrix with `Int` elements. The default version of `Strang(n)` generates a Strang matrix of type `Strang{Float64}`.
 
 That's it! Now, we have our own implementation of the Strang matrix. We have also given Julia just enough information such that it can also represent this nicely!
 
