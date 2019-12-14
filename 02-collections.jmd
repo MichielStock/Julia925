@@ -20,7 +20,7 @@ Let's start by eating the frog. Julia uses 1-based indexing...
 names = ["Arthur", "Ford", "Zaphod", "Marvin", "Trillian", "Eddie"]
 ```
 
-```julia
+```julia;eval=false
 names[0]        # this does not work, sorry Pythonista's
 ```
 
@@ -291,7 +291,6 @@ scores = Dict("humans" => 2, "vogons" => 1) # dictionaries
 
 ```julia
 scores["humans"]
-
 ```
 
 # Exercises
@@ -318,9 +317,23 @@ Write a one-liner function `vandermonde` to generate this matrix. This function 
 
 ## Determinant
 
-Write a function `mydet` to compute the determinat of a square matrix.
+Write a function `mydet` to compute the determinant of a square matrix. Remember, for a $2 \times 2$ matrix, the determinant is computed as
 
-#TODO: complete this!
+$$
+{\displaystyle|A|={\begin{vmatrix}a&b\\c&d\end{vmatrix}}=ad-bc.}
+$$
+
+
+For larger matrices, there is a recursive way of computing the determinant, based on the minors, i.e. the determinants of the submatrices. See [http://mathworld.wolfram.com/Determinant.html](http://mathworld.wolfram.com/Determinant.html).
+
+Write a function to compute the determinant of a general square matrix.
+
+```julia; eval=false
+function mydet(A)
+  size(A,1) != size(A,2) && throw(DimensionMismatch)
+  ...
+end
+```
 
 ## Ridge regression
 
