@@ -59,7 +59,7 @@ Integer <: Int
 
 # Methods and dispatch
 
-When a function is run for the first time with a particular combination of type inputs, it gets compiled by the LLVM compiler. Such a specific function is referred to as a `method`. Every time a function is run with a new combination of types of arguments, a suitable method is compiled. This is noticeable when measuring running time. Compare
+When a function is run for the first time with a particular combination of type inputs, it gets compiled by the LLVM compiler. Such a specific function is referred to as a `method`. Every time a function is run with a new combination of types of arguments, a suitable method is compiled. This is noticeable when measuring the running time. Compare
 
 ```julia; term=true
 mynewfun(x) = x^2 + x
@@ -257,8 +257,9 @@ OrderedPair(18, 23)
 
 OrderedPair(8, 2)
 ```
+# Exercises
 
-# Case study: the Strang matrix
+## Case study: the Strang matrix
 
 The Strang matrix is a tridiagonal matrix with -2 at the diagonal and above and below the diagonal.
 
@@ -313,4 +314,22 @@ function Base.:*(S::Strang, v::Vector)
   ...
   return x
 end
+```
+
+## Wizarding currency
+
+The British wizarding world uses Galleons, Sickles, and Knuts as a currency. There are 17 Sickles in a Galleon, and 29 Knuts in a Sickle, meaning there are 493 Knuts to a Galleon. We will make a structure `WizCur` to represent wizarding currency. This structure has three integer-valued fields: `galleons`, `sickles`, and `knuts`. The constructor should always create tidy representations, meaning that, for example, if the number of knuts is 29 or more, it just adds an appropriate number of sickles such that the number knuts is less than 29 (it's magical money). The same applies to the sickles, which can also never exceed 17.
+
+Overload `Base.show` such that Julia prints your currency as, for example, `7G, 2S, 9K`.
+
+Also, overload the function `+` to add two instances of `WizCur` and the `>` operator to compare two instances of currency.
+
+The piggy bank with Ron's life savings contains 19 Sickles and 732 Knuts. Harry has 3 Galleons, 1 Sickle, and 7 Knuts pocket change. Who has the most money? How many do they have together?
+
+```julia; eval=false
+struct WizCur
+  ...
+end
+
+...
 ```
