@@ -12,22 +12,22 @@ All Julia objects, both those already defined as well as those you might make yo
 
 The type of objects can be assessed using the function `typeof`. For collections, `eltype` gives the types of individual elements. Try the following examples. Note that types are always capitalized!
 
-```julia
+```julia; term=true
 a = 42; s = "mice"; n = 0.9; A = [1 2; 3 4];
 ```
-```julia
-typeof(a)]
+```julia; term=true
+typeof(a)
 ```
-```julia
+```julia; term=true
 typeof(s)
 ```
-```julia
+```julia; term=true
 typeof(n)
 ```
-```julia
+```julia; term=true
 typeof(A)
 ```
-```julia
+```julia; term=true
 eltype(A)
 ```
 
@@ -35,36 +35,36 @@ These are all *concrete types*. Julia types are part of a hierarchical type syst
 
 We can find the supertype of a concrete or abstract type using the function `supertype`.
 
-```julia
+```julia; term=true
 supertype(Int8)
 ```
-```julia
+```julia; term=true
 supertype(Float64)
 ```
-```julia
+```julia; term=true
 supertype(AbstractFloat)
 ```
-```julia
+```julia; term=true
 supertype(Real)
 ```
-```julia
+```julia; term=true
 supertype(Number)
 ```
-```julia
+```julia; term=true
 supertype(Any)
 ```
 See how all the numbers are hierarchically represented? Note that any type is always a subtype of `Any`. We can check if an object is (sub)type using the function `isa`.
 
-```julia
+```julia; term=true
 a isa Int  # Int is concrete type Int64
 ```
-```julia
+```julia; term=true
 a isa Integer  # Integer is abstract
 ```
-```julia
+```julia; term=true
 a isa Int8
 ```
-```julia
+```julia; term=true
 a isa Number
 ```
 
@@ -72,22 +72,22 @@ Concrete types always have a fixed representation whereas abstract types can be 
 
 We can check if one type is a subtype of the second one using the binary operator `<:`.
 
-```julia
+```julia; term=true
 Float64 <: AbstractFloat
 ```
-```julia
+```julia; term=true
 Float16 <: AbstractFloat
 ```
-```julia
+```julia; term=true
 AbstractFloat <: Number
 ```
-```julia
+```julia; term=true
 Int <: Number
 ```
-```julia
+```julia; term=true
 Int <: AbstractFloat
 ```
-```julia
+```julia; term=true
 Integer <: Int
 ```
 
@@ -95,24 +95,24 @@ Integer <: Int
 
 When a function is run for the first time with a particular combination of type inputs, it gets compiled by the LLVM compiler. Such a specific function is referred to as a `method`. Every time a function is run with a new combination of types of arguments, a suitable method is compiled. This is noticeable when measuring the running time. Compare
 
-```julia
+```julia; term=true
 mynewfun(x) = x^2 + x
 
 A = [1 2; 3 4];
 ```
-```julia
+```julia; term=true
 # first run
 @time mynewfun(A)
 ```
-```julia
+```julia; term=true
 # second run
 @time mynewfun(A)
 ```
-```julia
+```julia; term=true
 # now with a float
 @time mynewfun(1)
 ```
-```julia
+```julia; term=true
 # new value, same type
 @time mynewfun(12)
 ```
@@ -125,7 +125,7 @@ methods(*)
 
 The arguments a function can take can be restricted using the `::`-operator. Here, if we limit a function as `f(x::T)`, this means that `x` can be any type `<: T`. Can you explain the reasoning behind the following code? How does it process numbers? What does it do with strings?
 
-```julia
+```julia; term=true
 twice(x::Number) = 2x;
 twice(x::String) = x * x;
 ```
@@ -220,13 +220,13 @@ calls(cat::Cat) = println("miaaw")
 calls(dog::Dog) = println("woof")
 ```
 ```julia
-mycat = Cat("Appa")
-hisdog = Dog("Storm")
+mycat = Cat("Appa");
+hisdog = Dog("Storm");
 ```
-```julia
+```julia; term=true
 calls(mycat)
 ```
-```julia
+```julia; term=true
 calls(hisdog)
 ```
 
@@ -238,10 +238,10 @@ meets(pet1::Dog, pet2::Cat) = println("$(pet1.name) barks at $(pet2.name)");
 meets(pet1::Cat, pet2::Cat) = println("$(pet1.name) ignores $(pet2.name)");
 meets(pet1::Dog, pet2::Dog) = println("$(pet1.name) sniffs the but of $(pet2.name)");
 ```
-```julia
+```julia; term=true
 meets(mycat, hisdog)
 ```
-```julia
+```julia; term=true
 meets(hisdog, mycat)
 ```
 
@@ -261,10 +261,10 @@ end
 ```
 So here, each coordinate of the type `Point` has two attributes, `x` and `y`, of the same type. These so-called *parametric types* allow for processing the structures the right way.
 
-```julia
+```julia; term=true
 p = Point(1.0, 2.0)
 ```
-```julia
+```julia; term=true
 Point(1, 2)
 ```
 
@@ -276,10 +276,10 @@ Point(1, 2.0)
 
 Parametric types can be used in dispatch. For example, if we want to compute the norm of a Point, this would only make sense if Point is of type real.
 
-```julia
+```julia; term=true
 norm(p::Point{T} where {T<:Real}) = sqrt(p.x^2 + p.y^2);
 ```
-```julia
+```julia; term=true
 norm(p)
 ```
 
@@ -291,12 +291,12 @@ norm(p)
 Constructors are functions that create new objects. We have already seen that when creating a new `struc`, this immediately initiates the constructor (e.g., `Point(1.0, 2.0)`). These can also be made explicitly:
 
 ```julia
-Point(x::T, y::T) where {T<:Real} = Point{T}(x,y)
+Point(x::T, y::T) where {T<:Real} = Point{T}(x,y);
 ```
 
 Constructors, however, allow us to have custom behavior when initializing types. For example, we have seen that `Point(1, 2.0)` won't work, because the two inputs are of the same type. In this case, we can make the rule that one of the inputs has to be promoted to a more general type.
 
-```julia
+```julia; term=true
 Point(x::Real, y::Real) = Point(promote(x, y)...);
 
 Point(1, 2.0)
@@ -304,7 +304,7 @@ Point(1, 2.0)
 
 Or, suppose that we want that if only one input is provided, it just uses this twice, e.g. `Point(1)` behaves as `Point(1, 1)`:
 
-```julia
+```julia; term=true
 Point(x) = Point(x, x);
 
 Point(1)
@@ -327,10 +327,10 @@ struct OrderedPair
   end
 end
 ```
-```julia
+```julia; term=true
 OrderedPair(18, 23)
 ```
-```julia
+```julia; term=true
 OrderedPair(8, 2)
 ```
 # Exercises
@@ -369,16 +369,16 @@ Base.getindex(S::Strang, i, j) = i==j ? -2 : (abs(i-j)==1 ? 1 : 0)
 
 That's it! Now, we have our own implementation of the Strang matrix. We have also given Julia just enough information such that it can also represent this nicely!
 
-```julia
+```julia; term=true
 S = Strang(5)
 ```
 
 Note that much other functionality just magically appears.
 
-```julia
+```julia; term=true
 sum(S)
 ```
-```julia
+```julia; term=true
 v = [2.3, 1.4, 6.0, 9.0 , 1.7]
 S * v
 ```
