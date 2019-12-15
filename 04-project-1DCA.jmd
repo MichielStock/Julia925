@@ -10,7 +10,9 @@ In this exercise, we simulate elementary one-dimensional cellular automata (CA).
 
 Cellular automata are simple dynamical models, discrete in time, space, and state. In elementary cellular automata, the states only take the values 0 or 1. The state of the cell at time $t+1$ is solely determined by the state of that cell at time $t$ and the states of its neighbors. Since these three cells can jointly only take eight unique values, i.e.,
 
-! [(l, s, r) for l in 0:1 for s in 0:1 for r in 0:1]
+```julia
+[(l, s, r) for l in 0:1 for s in 0:1 for r in 0:1]
+```
 
 This means that if we assign one state to each combination, we have $2^8=256$ unique elementary cellular automata. Naturally, many of them are equivalent up to some symmetry, but there is quite some diversity in behavior among these different classes.
 
@@ -38,7 +40,9 @@ nextstate(l::Bool, s::Bool, r::Bool, rule::Int8) = bitstring(rule)[8-(4r+2s+1r)]
 
 Here, we have cleverly made use of the function `bitstring`, which transforms an 8-bit number in the corresponding bitstring.
 
-! @show bitstring(Int8(42))
+```julia
+bitstring(Int8(42))
+```
 
 The three Boolean variables are transformed into the correct index of this string. We might save ourselves the bother of ensuring that the argument `rule` is of the type `Int8` using dispatch.
 
@@ -98,13 +102,22 @@ end
 > **Assignments**
 > 1. Complete the function `simulate`.
 > 2. Choose a number for the rule. Simulate a elementary CA of size 101 for 100 timesteps. Start from a vector with all elements false, except for the middle cell.
-> 3. Visualize the result. This can be done using `heatmap(1X)` (multiplying by 1 turns the Booleans into numerical values).
+> 3. Visualize the result. This can be done either using `heatmap(1X)` (multiplying by 1 turns the Booleans into numerical values) or the function `printca` given below.
 
 
 ```julia; eval=false
 x₀ = ...
 
 
+```
+
+```julia
+function printca(X::Matrix{Bool})
+    n, m = size(X)
+    for i in 1:n
+        println(reduce(*, (s-> s ? "*" : "-").(X[i,:])))
+    end
+end
 ```
 # Type-based dispatch for rules
 
@@ -138,3 +151,7 @@ end
 ```
 
 > **Assignment** Make a new concrete type `StochCARule` to model stochastic elementary cellular automata. This type has an additional field `pflip`, which is the probability of switching the state after applying the rule. Make a custom `nextstate` to deal with this and simulate again correctly.
+
+```julia
+
+```
