@@ -61,8 +61,6 @@ a isa Integer  # Integer is abstract
 a isa Int8
 ```
 ```julia; term=true
-
-```julia
 a isa Number
 ```
 
