@@ -23,7 +23,7 @@ names = ["Arthur", "Ford", "Zaphod", "Marvin", "Trillian", "Eddie"]
 ```
 
 ```julia;eval=false
-names[0]        # this does not work, sorry Pythonista's
+names[0]        # this does not work, sorry Pythonistas
 ```
 
 ```julia
@@ -160,6 +160,10 @@ append!(names, ["Sam", "Gerard"]) # add an array
 
 ```julia
 pop!(names)
+```
+
+```julia
+names
 ```
 
 # Matrices

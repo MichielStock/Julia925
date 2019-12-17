@@ -387,7 +387,7 @@ OrderedPair(8, 2)
 
 # Case study: the Strang matrix
 
-The Strang matrix is a tridiagonal matrix with -2 at the diagonal and above and below the diagonal.
+The Strang matrix is a tridiagonal matrix with -2 at the diagonal and 1 above and below the diagonal.
 
 $$
 \begin{pmatrix}
