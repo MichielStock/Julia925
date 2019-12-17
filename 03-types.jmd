@@ -14,12 +14,25 @@ The type of objects can be assessed using the function `typeof`. For collections
 
 ```julia; term=true
 a = 42; s = "mice"; n = 0.9; A = [1 2; 3 4];
+```
 
+```julia
 typeof(a)
-typeof(s)
-typeof(n)
-typeof(A)
+```
 
+```julia
+typeof(s)
+```
+
+```julia
+typeof(n)
+```
+
+```julia
+typeof(A)
+```
+
+```julia
 eltype(A)
 ```
 
@@ -29,18 +42,41 @@ We can find the supertype of a concrete or abstract type using the function `sup
 
 ```julia; term=true
 supertype(Int8)
+```
+
+```julia
 supertype(Float64)
+```
+
+```julia
 supertype(AbstractFloat)
+```
+
+```julia
 supertype(Real)
+```
+
+```julia
 supertype(Number)
+```
+
+```julia
 supertype(Any)
 ```
 See how all the numbers are hierarchically represented? Note that any type is always a subtype of `Any`. We can check if an object is (sub)type using the function `isa`.
 
 ```julia; term=true
 a isa Int  # int is concrete type Int64
+```
+```julia
 a isa Integer  # integer is abstract
+```
+
+```julia
 a isa Int8
+```
+
+```julia
 a isa Number
 ```
 
@@ -50,10 +86,25 @@ We can check if one type is a subtype of the second one using the binary operato
 
 ```julia; term=true
 Float64 <: AbstractFloat
+```
+
+```julia
 Float16 <: AbstractFloat
+```
+
+```julia
 AbstractFloat <: Number
+```
+
+```julia
 Int <: Number
+```
+
+```julia
 Int <: AbstractFloat
+```
+
+```julia
 Integer <: Int
 ```
 
@@ -65,16 +116,24 @@ When a function is run for the first time with a particular combination of type 
 mynewfun(x) = x^2 + x
 
 A = [1 2; 3 4];
+```
 
+```julia
 # first run
 @time mynewfun(A)
+```
 
+```julia
 # second run
 @time mynewfun(A)
+```
 
+```julia
 # now with a float
 @time mynewfun(1)
+```
 
+```julia
 # new value, same type
 @time mynewfun(12)
 ```
@@ -85,6 +144,9 @@ The arguments a function can take can be restricted using the `::`-operator. Her
 
 ```julia
 twice(x::Number) = 2x
+```
+
+```julia
 twice(x::String) = x * x
 ```
 
@@ -99,11 +161,29 @@ Note that, generally seen, typing the functions is **not** needed to improve the
 
 ```julia
 f(x, y) = println("No life forms present")
+```
+
+```julia
 f(x::T, y::T) where {T} = x * y  # short for {T <: Any}
+```
+
+```julia
 f(x::Integer, y::Real) = 2x + y
+```
+
+```julia
 f(x::Int, y::Int) = 2x + 2y
+```
+
+```julia
 f(x::Integer, y::Float64) = x + 2y
+```
+
+```julia
 f(x::Float64, y::Real) = x - y
+```
+
+```julia
 f(x::Float64, y::Float64) = 2x - y
 ```
 
@@ -111,14 +191,41 @@ Gives
 
 ```julia; eval=false
 f(1, 2.0)
+```
+
+```julia; eval=false
 f(1.0, 2)
+```
+
+```julia; eval=false
 f(Int8(1), Int8(2))
+```
+
+```julia; eval=false
 f(1.0, 2.0)
+```
+
+```julia; eval=false
 f("one", 2)
+```
+
+```julia; eval=false
 f("one", "two")
+```
+
+```julia; eval=false
 f(1, Float32(2.0))
+```
+
+```julia; eval=false
 f(1, 2)
+```
+
+```julia; eval=false
 f([1 1; 1 1], [2.0 2.0; 2.0 2.0])
+```
+
+```julia; eval=false
 f([1 1; 1 1], [2 2; 2 2])
 ```
 
@@ -159,11 +266,18 @@ Base.show(io::IO, pet::Pet) = print("pet $(pet.name)")
 calls(cat::Cat) = println("miaaw")
 calls(dog::Dog) = println("woof")
 
+```
 
+```julia
 mycat = Cat("Appa")
 hisdog = Dog("Storm")
+```
 
+```julia
 calls(mycat)
+```
+
+```julia
 calls(hisdog)
 ```
 
@@ -176,6 +290,9 @@ meets(pet1::Cat, pet2::Cat) = println("$(pet1.name) ignores $(pet2.name)")
 meets(pet1::Dog, pet2::Dog) = println("$(pet1.name) sniffs the but of $(pet2.name)")
 
 meets(mycat, hisdog)
+```
+
+```julia
 meets(hisdog, mycat)
 ```
 
@@ -197,7 +314,9 @@ So here, each coordinate of the type `Point` has two attributes, `x` and `y`, of
 
 ```julia; term=true
 p = Point(1.0, 2.0)
+```
 
+```julia
 Point(1, 2)
 ```
 
@@ -224,7 +343,9 @@ Constructors, however, allow us to have custom behavior when initializing types.
 
 ```julia
 Point(x::Real, y::Real) = Point(promote(x, y)...)
+```
 
+```julia
 Point(1, 2.0)
 ```
 
@@ -232,7 +353,9 @@ Or, suppose that we want that if only one input is provided, it just uses this t
 
 ```julia
 Point(x) = Point(x, x)
+```
 
+```julia
 Point(1)
 ```
 
@@ -252,9 +375,13 @@ struct OrderedPair
     end
   end
 end
+```
 
+```julia
 OrderedPair(18, 23)
+```
 
+```julia
 OrderedPair(8, 2)
 ```
 
@@ -282,7 +409,9 @@ struct Strang <: AbstractMatrix{Int}
     new(n)
   end
 end
+```
 
+```julia
 Base.eltype(S::Strang) = Int
 Base.size(S::Strang) = (S.n, S.n)
 Base.getindex(S::Strang, i, j) = i==j ? -2 : (abs(i-j)==1 ? 1 : 0)
