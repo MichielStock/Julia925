@@ -1,7 +1,7 @@
 using Weave
 
 filenames = ["01-basics", "02-collections", "03-types" ,
-              "04-project-1DCA", "05-project-errorprop" , ]
+              "04-project-1DCA", "05-project-errorprop"]
 notesDir = "notes/"
 notebookDir = "notebooks/"
 

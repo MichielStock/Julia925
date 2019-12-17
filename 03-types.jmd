@@ -27,10 +27,6 @@ typeof(n)
 ```julia; term=true
 typeof(A)
 ```
-```julia; term=true
-eltype(A)
-```
-
 These are all *concrete types*. Julia types are part of a hierarchical type system, forming a single, fully connected type graph. The concrete types are the leaves of this tree, whereas the inner nodes are *abstract types*. As hinted by the name, these are abstract and cannot be instantiated. They, however, help with conceptually ordering the type system.
 
 We can find the supertype of a concrete or abstract type using the function `supertype`.
@@ -65,6 +61,8 @@ a isa Integer  # Integer is abstract
 a isa Int8
 ```
 ```julia; term=true
+
+```julia
 a isa Number
 ```
 
@@ -241,6 +239,7 @@ meets(pet1::Dog, pet2::Dog) = println("$(pet1.name) sniffs the but of $(pet2.nam
 ```julia; term=true
 meets(mycat, hisdog)
 ```
+
 ```julia; term=true
 meets(hisdog, mycat)
 ```
@@ -296,9 +295,12 @@ Point(x::T, y::T) where {T<:Real} = Point{T}(x,y);
 
 Constructors, however, allow us to have custom behavior when initializing types. For example, we have seen that `Point(1, 2.0)` won't work, because the two inputs are of the same type. In this case, we can make the rule that one of the inputs has to be promoted to a more general type.
 
+
 ```julia; term=true
 Point(x::Real, y::Real) = Point(promote(x, y)...);
+```
 
+```julia
 Point(1, 2.0)
 ```
 
@@ -359,7 +361,9 @@ struct Strang <: AbstractMatrix{Int}
     new(n)
   end
 end
+```
 
+```julia
 Base.eltype(S::Strang) = Int
 Base.size(S::Strang) = (S.n, S.n)
 Base.getindex(S::Strang, i, j) = i==j ? -2 : (abs(i-j)==1 ? 1 : 0)

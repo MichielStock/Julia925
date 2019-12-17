@@ -9,21 +9,38 @@ Let's get started with the basics. Some mathematical operations,
 
 ```julia; term=true
 1 + 2       # adding integers
+```
 
+```julia; term=true
 1.0 + 2.0   # adding floats
+```
 
+```julia; term=true
 2 / 4       # standard division
+```
 
+```julia; term=true
 div(2, 4)   # Computes 2/4 truncated to an integer
+2 ÷ 4
+```
 
+```julia; term=true
 35 \ 7      # inverse division
+```
 
+```julia; term=true
 1 // 3      # fractions
+```
 
+```julia; term=true
 1//2 + 1//4
+```
 
+```julia; term=true
 'c'        # characters (unicode)
+```
 
+```julia; term=true
 :symbol    # symbols, mostly used for macros
 ```
 
@@ -31,7 +48,9 @@ variable assignment,
 
 ```julia; term=true
 x = 2
+```
 
+```julia; term=true
 τ = 1 / 37  # unicode variable names are allowed
 ```
 
@@ -61,6 +80,16 @@ and string interpolation is performed with `$`.
 println("The answer to $mystery is $(3*2*7)")
 ```
 
+repetitions of strings can be done using the operators `*` and `^`.
+This use of `*` and `^` makes sense by analogy with multiplication and exponentiation. Just as `4^3` is equivalent to `4*4*4`, we expect `"Spam"^3` to be the same as `"Spam"*"Spam"*"Spam"`, and it is.
+
+```julia
+breakfast = "eggs"
+abetterbreakfast = "SPAM"
+println(breakfast * abetterbreakfast)
+println(breakfast * abetterbreakfast^3 * breakfast)
+```
+
 All binary arithmetic and bitwise operators have an updating version that assigns the result of the operation back into the left operand. The updating version of the binary operator is formed by placing a, `=`, immediately after the operator.
 
 ```julia; term=true
@@ -72,6 +101,9 @@ Similarly to Matlab, when using the REPL, Julia will print the result of every s
 
 ```julia; term=true
 a = 10;  # not printed
+```
+
+```julia; term=true
 a = 20
 ```
 
@@ -81,28 +113,78 @@ From zero to one.
 ```julia; term = true
 # Boolean operators
 !true
+```
+
+```julia; term=true
 !false
+```
+
+```julia; term=true
 1 == 1
+```
+
+```julia; term=true
 2 == 1
+```
+
+```julia; term=true
 1 != 1
+```
+
+```julia; term=true
 2 != 1
+```
+
+```julia; term=true
 1 < 10
+```
+
+```julia; term=true
 1 > 10
+```
+
+```julia; term=true
 2 <= 2
+```
+
+```julia; term=true
 2 >= 2
+```
+
+```julia; term=true
 # Comparisons can be chained
 1 < 2 < 3
+```
+
+```julia; term=true
 2 < 3 < 2
+# Logical operators
+true && true
+true || false
 ```
 
 Likewise, we have the Boolean logic operators `&&` (AND), `||` (OR) and `⊻` (XOR, exclusive or).
-
 ```julia; term=true
 true && true
+```
+
+```julia; term=true
 true && false
+```
+
+```julia; term=true
 true || false
+```
+
+```julia; term=true
 false || false
+```
+
+```julia; term=true
 true ⊻ false
+```
+
+```julia; term=true
 true ⊻ true
 ```
 
@@ -112,7 +194,13 @@ true ⊻ true
 x, y = true, false
 
 (x || y) && !(y || y)
+```
+
+```julia; term=true
 (x ⊻ y) && (!x ⊻ !y)
+```
+
+```julia; term=true
 (x || y) ⊻ (x && y)
 ```
 
@@ -162,6 +250,16 @@ for (char, pet) in zip(characters, pets)
 end
 ```
 
+Strings can also be looped
+
+```julia
+getme = "a shrubbery"
+
+for letter ∈ getme
+  println("$letter")
+end
+```
+
 ```julia;eval = false
 n = 1675767616;
 
@@ -185,11 +283,17 @@ function square(x)
   result = x * x
   return result
 end
+```
 
+```julia; term=true
 square(2)
+```
 
+```julia; term=true
 square(2.0)
+```
 
+```julia; term=true
 square("ni")   # the multiplication of strings is defined as a concatenation
 ```
 
@@ -212,11 +316,17 @@ Keyword arguments are defined using a semicolon in the back signature and a defa
 
 ```julia
 safelog(x, offset=0.1; base=10) = log(x + offset) / log(base)
+```
 
+```julia; term=true
 safelog(0)
+```
 
+```julia; term=true
 safelog(0, 0.01)
+```
 
+```julia; term=true
 safelog(0, 0.01, base=2)
 ```
 
@@ -233,7 +343,9 @@ function mymean(X...)
 end
 
 mymean(1, 3, 5)
+```
 
+```julia; term=true
 mymean(1, 3, 5, 7)
 ```
 
@@ -257,13 +369,37 @@ For a lot of standard Julia functions a in-place version is defined. In-place me
 my_unsorted_list = [4, 5, 9, 7, 1, 9]
 
 sort(my_unsorted_list)
+```
 
+```julia; term=true
 my_unsorted_list
+```
 
+```julia; term=true
 sort!(my_unsorted_list)
 
 my_unsorted_list
 ```
+
+Specific functions can be generated if you have more information on the input type.
+This is called multiple dispatch.
+
+The `::` operator attaches type annotations to expressions and variables.
+
+How does the documentation for the function square look like after you executed the cell below?
+
+```julia
+function square(x::Float64)
+  println("using function with floats")
+  result = x * x
+  return result
+end
+
+println(square(4))
+println(square(4.))
+```
+
+More about types in the next section !
 
 # Plotting
 Quite essential for scientific programming is the visualisation of the results. `Plots` is the Julia package that handles a lot of the visualisation. `rand(10)`, returns an array of 10 random floats between 0 and 1.
@@ -272,7 +408,7 @@ Quite essential for scientific programming is the visualisation of the results. 
 using Plots
 
 plot(1:10, rand(10), label="first")
-plot!(1:10, rand(10), label="second")
+plot!(1:10, rand(10), label="second") # adding to current figure using plot!
 
 scatter!([1:10], randn(10), label="scatter")
 
@@ -282,11 +418,79 @@ title!("My pretty Julia plot")
 ```
 
 ```julia
-plot(0:0.1:10, x -> sin(x) / x, xlabel="x", ylabel="sin(x)/x", legend=:none)
+# notice the use of a symbol as an argument !
+plot(0:0.1:10, x -> sin(x) / x, xlabel="x", ylabel="sin(x)/x", color=:red, marker=:square, legend=:none)
 ```
 
 ```julia
 contour(-5:0.1:5, -10:0.1:10, (x, y) -> 3x^2-4y^2 + x*y/6)
 ```
 
-# Exercise
+# Exercises
+
+## 1
+
+Write a function named `rightjustify` that takes a string named `s` as a parameter and prints the string with enough leading spaces so that the last letter of the string is in column 70 of the display.
+
+Use string concatenation and repetition. Also, Julia provides a built-in function called `length`. Check what it does!
+
+```julia;eval = false
+function rightjustify()
+end
+```
+
+## 2
+
+1. Write a function `printgrid` that draws a grid like the following:
+
+```julia;eval = false
++ - - - - + - - - - +
+|         |         |
+|         |         |
+|         |         |
+|         |         |
++ - - - - + - - - - +
+|         |         |
+|         |         |
+|         |         |
+|         |         |
++ - - - - + - - - - +
+```
+
+2. Write a function that draws a similar grid with four rows and four columns.
+
+Tips:
+
+To print more than one value on a line, you can print a comma-separated sequence of values:
+
+`println("+", "-")`
+
+The function `print` does not advance to the next line.
+
+```julia;eval = false
+function printgrid()
+end
+```
+
+## 3
+
+The function `time` returns the current Greenwich Mean Time in seconds since "the epoch", which is an arbitrary time used as a reference point. On UNIX systems, the epoch is 1 January 1970.
+Write a script that reads the current time and converts it to a time of day in hours, minutes, and seconds, plus the number of days since the epoch.
+
+```julia;eval = false
+```
+
+## 4
+
+Fermat’s Last Theorem says that there are no positive integers $a$, $b$, and $c$ such that
+
+$a^n + b^n = c^n$
+
+for any value of $n$ greater than 2.
+
+1. Write a function named `checkfermat` that takes four parameters ($a$, $b$, $c$ and $n$) and checks to see if Fermat’s theorem holds. If $n$ is greater than 2 and $a^n + b^n == c^n$ the program should print, "Holy smokes, Fermat was wrong!" Otherwise the program should print, "No, that doesn’t work."
+
+2. Write a function that prompts the user to input values for $a$, $b$, $c$ and $n$, converts them to integers, and uses checkfermat to check whether they violate Fermat’s theorem. Tip: check the functions `readline` and `parse`
+
+```julia;eval = false
+```
