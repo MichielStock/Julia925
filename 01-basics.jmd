@@ -158,8 +158,14 @@ From zero to one.
 
 ```julia; term=true
 2 < 3 < 2
+```
+
+```julia
 # Logical operators
 true && true
+```
+
+```julia
 true || false
 ```
 
@@ -234,17 +240,25 @@ clip(x) = ...
 
 ```julia
 characters = ["Harry", "Ron", "Hermione"]
+```
 
+```julia
 for char in characters
   println("Character $char")
 end
+```
 
+```julia
 for (i, char) in enumerate(characters)
   println("$i. $char")
 end
+```
 
+```julia
 pets = ["Hedwig", "Pig", "Crookhanks"]
+```
 
+```julia
 for (char, pet) in zip(characters, pets)
   println("$char has $pet as a pet")
 end
@@ -254,7 +268,9 @@ Strings can also be looped
 
 ```julia
 getme = "a shrubbery"
+```
 
+```julia
 for letter ∈ getme
   println("$letter")
 end
@@ -394,9 +410,14 @@ function square(x::Float64)
   result = x * x
   return result
 end
+```
 
-println(square(4))
-println(square(4.))
+```julia
+square(4)
+```
+
+```julia
+square(4.)
 ```
 
 More about types in the next section !
