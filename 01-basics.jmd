@@ -162,6 +162,9 @@ From zero to one.
 
 ```julia; term=true
 2 < 3 < 2
+```
+
+```julia; term=true
 # Logical operators
 true && true
 true || false
