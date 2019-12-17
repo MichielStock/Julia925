@@ -4,7 +4,7 @@ author : Michiel Stock, Bram De Jaegher, Daan Van Hauwermeiren
 date: 18 December 2019
 ---
 
-In this exercise, we simulate elementary one-dimensional cellular automata (CA). It is a simple application, which nevertheless illustrates many of the Julia programming concepts as it has all aspects of an individual-based model.
+In this exercise, we simulate an elementary one-dimensional cellular automata (CA). It is a simple application, which illustrates many of the Julia programming concepts as it has all aspects of an individual-based model.
 
 # What are elementary cellular automata?
 
@@ -14,7 +14,7 @@ Cellular automata are simple dynamical models, discrete in time, space, and stat
 [(l, s, r) for l in 0:1 for s in 0:1 for r in 0:1]
 ```
 
-This means that if we assign one state to each combination, we have $2^8=256$ unique elementary cellular automata. Naturally, many of them are equivalent up to some symmetry, but there is quite some diversity in behavior among these different classes.
+Every step the state of each cell is update according to a set of rules. Each of the 8 combinations of states above can lead to either a zero or a one in the center cell. This means that if we assign one state to each combination, we have $2^8=256$ unique elementary cellular automata. Naturally, many of them are equivalent up to some symmetry, but there is quite some diversity in behavior among these different classes.
 
 An integer between 0 and 255 solely defines every elementary cellular automaton. The binary representation of this number determines the state updates. This is best explained by showing some examples.
 
