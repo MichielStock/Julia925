@@ -405,6 +405,8 @@ Also, overload the function `+` to add two instances of `WizCur` and the `>` and
 
 The piggy bank with Ron's life savings contains 19 Sickles and 732 Knuts. Harry has 3 Galleons, 1 Sickle, and 7 Knuts pocket change. Who has the most money? How many do they have together?
 
+HINT: you might find `%` and `div` useful here.
+
 ```julia; eval=false
 struct WizCur
   ...
