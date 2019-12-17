@@ -25,6 +25,10 @@ div(2, 4)   # Computes 2/4 truncated to an integer
 ```
 
 ```julia; term=true
+7 % 3       # get the remainder of the integer division
+```
+
+```julia; term=true
 35 \ 7      # inverse division
 ```
 
