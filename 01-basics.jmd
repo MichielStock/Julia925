@@ -499,5 +499,7 @@ for any value of $n$ greater than 2.
 
 2. Write a function that prompts the user to input values for $a$, $b$, $c$ and $n$, converts them to integers, and uses checkfermat to check whether they violate Fermat’s theorem. Tip: check the functions `readline` and `parse`
 
+3. Can you write the code so that the functions in 4.1 and 4.2 have the same name?
+
 ```julia;eval = false
 ```
