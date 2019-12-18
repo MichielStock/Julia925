@@ -25,6 +25,10 @@ div(2, 4)   # Computes 2/4 truncated to an integer
 ```
 
 ```julia; term=true
+7 % 3       # get the remainder of the integer division
+```
+
+```julia; term=true
 35 \ 7      # inverse division
 ```
 
@@ -88,6 +92,50 @@ breakfast = "eggs"
 abetterbreakfast = "SPAM"
 println(breakfast * abetterbreakfast)
 println(breakfast * abetterbreakfast^3 * breakfast)
+```
+
+Lots of handy ´String`-operations are available in the standard library of Julia:
+
+```julia
+uppercase("This feels like shouting.")
+```
+
+```julia
+findfirst("a", "banana")
+```
+
+```julia
+findfirst("na", "banana")
+```
+
+```julia
+findnext("na", "banana", 4)
+```
+
+Unlike `Strings´, a `Char` value represents a single character and is surrounded by single quotes.
+
+```julia
+'x'
+```
+
+The operator `∈` (\in TAB) is a boolean operator that takes a character and a string and returns true if the first appears in the second:
+
+```julia
+'a' ∈ "banana"
+```
+
+> **Question**: Check the behaviour of the relational operators on strings.
+
+```julia; eval=false
+"apples" == "pears"
+```
+
+```julia; eval=false
+"apples" < "pears"
+```
+
+```julia; eval=false
+"apples" < "Pears"
 ```
 
 All binary arithmetic and bitwise operators have an updating version that assigns the result of the operation back into the left operand. The updating version of the binary operator is formed by placing a, `=`, immediately after the operator.
@@ -158,6 +206,9 @@ From zero to one.
 
 ```julia; term=true
 2 < 3 < 2
+```
+
+```julia; term=true
 # Logical operators
 true && true
 true || false
@@ -222,7 +273,7 @@ Julia allows for some very condense control flow structures.
 y = condition ? valueiftrue : valueiffalse
 ```
 
-> **Assignment** Complete the clip function: $\min(0, \max(1, x))$ for a given $x$, without making use of the functions `min` and `max`.
+> **Assignment** Complete the clip function: $\max(0, \min(1, x))$ for a given $x$, without making use of the functions `min` and `max`.
 
 ```julia; eval=false
 x = 2.0
@@ -401,6 +452,21 @@ println(square(4.))
 
 More about types in the next section !
 
+# Macros
+Macros provide a method to include generated code in the final body of a program. It is a way of generating a new output expression, given an unevaluated input expression. When your Julia program runs, it first parses and evaluates the macro, and the processed code produced by the macro is eventually evaluated like an ordinary expression.
+
+Some nifty basic macros are `@time` and `@show`. `@time` prints the cpu time and memory allocations of an expression.
+
+```julia
+@time square(10)
+```
+
+The `@show` macro is often useful for debugging purposes. It displays both the expression to be evaluated and its result, finally returning the value of the result.
+
+```julia
+@show 1 + 1
+```
+
 # Plotting
 Quite essential for scientific programming is the visualisation of the results. `Plots` is the Julia package that handles a lot of the visualisation. `rand(10)`, returns an array of 10 random floats between 0 and 1.
 
@@ -491,6 +557,8 @@ for any value of $n$ greater than 2.
 1. Write a function named `checkfermat` that takes four parameters ($a$, $b$, $c$ and $n$) and checks to see if Fermat’s theorem holds. If $n$ is greater than 2 and $a^n + b^n == c^n$ the program should print, "Holy smokes, Fermat was wrong!" Otherwise the program should print, "No, that doesn’t work."
 
 2. Write a function that prompts the user to input values for $a$, $b$, $c$ and $n$, converts them to integers, and uses checkfermat to check whether they violate Fermat’s theorem. Tip: check the functions `readline` and `parse`
+
+3. Can you write the code so that the functions in 4.1 and 4.2 have the same name?
 
 ```julia;eval = false
 ```
