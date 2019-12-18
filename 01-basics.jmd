@@ -408,6 +408,21 @@ println(square(4.))
 
 More about types in the next section !
 
+# Macros
+Macros provide a method to include generated code in the final body of a program. It is a way of generating a new output expression, given an unevaluated input expression. When your Julia program runs, it first parses and evaluates the macro, and the processed code produced by the macro is eventually evaluated like an ordinary expression.
+
+Some nifty basic macros are `@time` and `@show`. `@time` prints the cpu time and memory allocations of an expression.
+
+```julia
+@time square(10)
+```
+
+The `@show` macro is often useful for debugging purposes. It displays both the expression to be evaluated and its result, finally returning the value of the result.
+
+```julia
+@show 1 + 1
+```
+
 # Plotting
 Quite essential for scientific programming is the visualisation of the results. `Plots` is the Julia package that handles a lot of the visualisation. `rand(10)`, returns an array of 10 random floats between 0 and 1.
 
