@@ -61,8 +61,6 @@ a isa Integer  # Integer is abstract
 a isa Int8
 ```
 ```julia; term=true
-
-```julia
 a isa Number
 ```
 
@@ -406,6 +404,8 @@ Overload `Base.show` such that Julia prints your currency as, for example, `7G, 
 Also, overload the function `+` to add two instances of `WizCur` and the `>` and `<` operators to compare two instances of wizarding currency.
 
 The piggy bank with Ron's life savings contains 19 Sickles and 732 Knuts. Harry has 3 Galleons, 1 Sickle, and 7 Knuts pocket change. Who has the most money? How many do they have together?
+
+HINT: you might find `%` and `div` useful here.
 
 ```julia; eval=false
 struct WizCur

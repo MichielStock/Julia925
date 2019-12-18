@@ -119,13 +119,13 @@ $$
 \log \left(\frac{I_0}{I}\right) = \varepsilon c l\,,
 $$
 
-with $\varepsilon$ the molar extinction coefficient and $$l$$ the thickness of the cuvet.
+with $\varepsilon$ the molar extinction coefficient and $l$ the thickness of the cuvet.
 
 Suppose we want to determine the extinction coefficient for some substance, using a cuvet of thickness $0.02\pm 0.001$ and a reference solution of a concentration of $0.73\pm 0.02$ M.
 
 We perform some intensity measurements, with associated measurement errors.
 
-| $I0$ | $\sigma_{I0}$ | $I1$ | $\sigma_{I1}$ |
+| $I0$ | $\sigma_{I0}$ | $I$ | $\sigma_{I}$ |
 |------|---------------|------|---------------|
 | 0.8  | 0.14          | 0.2  | 0.12          |
 | 1.1  | 0.11          | 0.3  | 0.07          |
