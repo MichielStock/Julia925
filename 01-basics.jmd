@@ -94,6 +94,50 @@ println(breakfast * abetterbreakfast)
 println(breakfast * abetterbreakfast^3 * breakfast)
 ```
 
+Lots of handy ´String`-operations are available in the standard library of Julia:
+
+```julia
+uppercase("This feels like shouting.")
+```
+
+```julia
+findfirst("a", "banana")
+```
+
+```julia
+findfirst("na", "banana")
+```
+
+```julia
+findnext("na", "banana", 4)
+```
+
+Unlike `Strings´, a `Char` value represents a single character and is surrounded by single quotes.
+
+```julia
+'x'
+```
+
+The operator `∈` (\in TAB) is a boolean operator that takes a character and a string and returns true if the first appears in the second:
+
+```julia
+'a' ∈ "banana"
+```
+
+> **Question**: Check the behaviour of the relational operators on strings.
+
+```julia; eval=false
+"apples" == "pears"
+```
+
+```julia; eval=false
+"apples" < "pears"
+```
+
+```julia; eval=false
+"apples" < "Pears"
+```
+
 All binary arithmetic and bitwise operators have an updating version that assigns the result of the operation back into the left operand. The updating version of the binary operator is formed by placing a, `=`, immediately after the operator.
 
 ```julia; term=true
