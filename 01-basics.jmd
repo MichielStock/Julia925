@@ -273,7 +273,7 @@ Julia allows for some very condense control flow structures.
 y = condition ? valueiftrue : valueiffalse
 ```
 
-> **Assignment** Complete the clip function: $\min(0, \max(1, x))$ for a given $x$, without making use of the functions `min` and `max`.
+> **Assignment** Complete the clip function: $\max(0, \min(1, x))$ for a given $x$, without making use of the functions `min` and `max`.
 
 ```julia; eval=false
 x = 2.0
