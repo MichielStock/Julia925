@@ -5,6 +5,9 @@ If you have *Julia* and *IJulia*-notebooks installed, clone the repo and work lo
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/MichielStock/Julia925/master)
 
+## Course notes
+The PDF version of the course notes can be downloaded [here](https://github.com/MichielStock/Julia925/releases/tag/V1.0).
+
 ## Installation instructions
 ### Installing Julia
 1. Download the *Julia* binaries for your system [here](https://julialang.org/downloads/) we suggest to install the Long-term support release, v1.0.5
