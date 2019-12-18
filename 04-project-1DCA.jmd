@@ -55,10 +55,10 @@ nextstate(l::Bool, s::Bool, r::Bool, rule::Integer) = nextstate(l, s, r, Int8(ru
 ```julia;eval=false
 rule = ...
 ```
-```julia
+```julia;eval=false
 S = ...
 ```
-```julia
+```julia;eval=false
 function nextstates(S, rule)
   ...
   return states
@@ -109,7 +109,6 @@ end
 
 ```julia; eval=false
 x₀ = ...
-
 
 ```
 
