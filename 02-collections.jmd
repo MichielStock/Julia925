@@ -38,7 +38,7 @@ names[0]        # this does not work, sorry Pythonista's
 
 Slicing arrays is intuitive,
 ```julia
-  names[3:6]
+names[3:6]
 ```
 
 and slicing with assignment too.
