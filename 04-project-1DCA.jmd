@@ -35,19 +35,19 @@ We start by implementing the updating rule from a single state to the next. This
 Updating a cell depends only on the state of the cell and its two neighbors. Let us use three Boolean variables `(l, s, r)` to denote them. Here `s` is the state of the cell of interest, and `l` and `r` are the states of its left and right neighbor, respectively. An integer between 0 and 255 can represent the rule, hence an 8-bit number. The rule for updating a state is implemented below.
 
 ```julia
-nextstate(l::Bool, s::Bool, r::Bool, rule::Int8) = bitstring(rule)[8-(4r+2s+1r)] == '1';
+nextstate(l::Bool, s::Bool, r::Bool, rule::UInt8) = bitstring(rule)[8-(4r+2s+1r)] == '1';
 ```
 
 Here, we have cleverly made use of the function `bitstring`, which transforms an 8-bit number in the corresponding bitstring.
 
 ```julia
-bitstring(Int8(42))
+bitstring(UInt8(42))
 ```
 
-The three Boolean variables are transformed into the correct index of this string. We might save ourselves the bother of ensuring that the argument `rule` is of the type `Int8` using dispatch.
+The three Boolean variables are transformed into the correct index of this string. We might save ourselves the bother of ensuring that the argument `rule` is of the type `UInt8` using dispatch.
 
 ```julia
-nextstate(l::Bool, s::Bool, r::Bool, rule::Integer) = nextstate(l, s, r, Int8(rule));
+nextstate(l::Bool, s::Bool, r::Bool, rule::Integer) = nextstate(l, s, r, UInt8(rule));
 ```
 
 > **Assignment**: Create an 8 by 3 matrix `S` containing all possible states of three adjacent cells. Complete the function `nextstates`, which returns a vector containing the next state of the middle cell.
@@ -128,9 +128,9 @@ In the previous section, we developed a working implementation of an elementary 
 abstract type CARule end
 
 struct DetCARule <: CARule
-    rulenr::Int8
+    rulenr::UInt8
     function DetCARule(r::Integer)  # custom constructor
-        new(Int8(r))
+        new(UInt8(r))
     end
 end
 ```
