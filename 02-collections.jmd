@@ -38,7 +38,7 @@ names[0]        # this does not work, sorry Pythonista's
 
 Slicing arrays is intuitive,
 ```julia
-  names[3:6]
+names[3:6]
 ```
 
 and slicing with assignment too.
@@ -344,7 +344,7 @@ scores["humans"]
 
 ## Vandermonde matrix
 
-Write a function to generate an $n \times m$ [Vandermonde matrix](https://en.wikipedia.org/wiki/Vandermonde_matrix). This matrix is defined as follows
+Write a function to generate an $n \times m$ [Vandermonde matrix](https://en.wikipedia.org/wiki/Vandermonde_matrix) for a given vector $\alpha=[\alpha_1,\alpha_2,\ldots,\alpha_m]^T$. This matrix is defined as follows
 
 $$
 {\displaystyle V={\begin{bmatrix}1&\alpha _{1}&\alpha _{1}^{2}&\dots &\alpha _{1}^{n-1}\\1&\alpha _{2}&\alpha _{2}^{2}&\dots &\alpha _{2}^{n-1}\\1&\alpha _{3}&\alpha _{3}^{2}&\dots &\alpha _{3}^{n-1}\\\vdots &\vdots &\vdots &\ddots &\vdots \\1&\alpha _{m}&\alpha _{m}^{2}&\dots &\alpha _{m}^{n-1}\end{bmatrix}},}
@@ -356,10 +356,10 @@ $$
 V = [\alpha_i^{j-1}] .
 $$
 
-Write a one-liner function `vandermonde` to generate this matrix. This function takes as inputs the dimensions, `n` and `m` and an optional value `α` with a default of `1.0`.
+Write a one-liner function `vandermonde` to generate this matrix. This function takes as a vector `α` and `m`, the number of powers to compute.
 
 ```julia
-
+vandermonde(α, m)
 ```
 
 ## Determinant
